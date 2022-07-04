@@ -11,9 +11,21 @@ $ docker-compose up -d
 $ docker exec -it team42_react-app_1 sh
 ```
 
-# Reactサーバーの開発用サーバーの起動
+# Reactコンテナの初回セットアップ
+
+```
+$ npm install
+```
+
+# Reactコンテナの開発用サーバーの起動
 
 ```
 $ cd react-app
 $ npm start
+```
+
+# コンテナを閉じる
+
+```
+$ docker-compose down
 ```
