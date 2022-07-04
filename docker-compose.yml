@@ -1,0 +1,12 @@
+version: "3"
+services:
+  react-app:
+    build: "."
+    volumes:
+      - ./:/home/team42/
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    user: "node"
+    image:
+      react_server_team42
