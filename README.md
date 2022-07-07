@@ -5,19 +5,19 @@ $ docker-compose up -d
 ```
 
 
-# Reactサーバー用コンテナのターミナルの起動
+# Nextサーバー用コンテナのターミナルの起動
 
 ```
 $ docker exec -it campers_next-app sh
 ```
 
-# Reactコンテナの初回セットアップ
+# Nextコンテナの初回セットアップ
 
 ```
 $ npm install
 ```
 
-# Reactコンテナの開発用サーバーの起動
+# Nextコンテナの開発用サーバーの起動
 
 ```
 $ cd next-app
