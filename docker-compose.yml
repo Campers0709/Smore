@@ -3,8 +3,8 @@ services:
   react-app:
     build: "."
     volumes:
-      - ./:/home/team42/
-    container_name: team42_react-app_1
+      - ./:/home/node
+    container_name: campers_next-app
     ports:
       - "3000:3000"
     stdin_open: true

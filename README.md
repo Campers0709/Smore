@@ -8,7 +8,7 @@ $ docker-compose up -d
 # Reactサーバー用コンテナのターミナルの起動
 
 ```
-$ docker exec -it team42_react-app_1 sh
+$ docker exec -it campers_next-app sh
 ```
 
 # Reactコンテナの初回セットアップ
@@ -20,8 +20,8 @@ $ npm install
 # Reactコンテナの開発用サーバーの起動
 
 ```
-$ cd react-app
-$ npm start
+$ cd next-app
+$ npm run dev
 ```
 
 # コンテナを閉じる
