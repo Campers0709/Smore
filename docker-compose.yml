@@ -3,11 +3,11 @@ services:
   react-app:
     build: "."
     volumes:
-      - ./:/home/node
+      - ./:/home/root
     container_name: campers_next-app
     ports:
       - "3000:3000"
     stdin_open: true
-    user: "node"
+    user: "root"
     image:
       react_server_team42
