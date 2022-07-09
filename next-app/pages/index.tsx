@@ -9,22 +9,32 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
+import Image from "next/image";
 
 const HomePage: NextPage = () => {
   return (
     <>
       <Box
-        paddingTop={"5"}
+        paddingTop={"5px"}
         h={"10vh"}
         position={"fixed"}
         bg={"white"}
         w={"100%"}
       >
         <HStack justify={"space-between"}>
-          <Box paddingLeft={"20"}>
-            <Text fontWeight={"bold"} fontSize={20}>
-              S&apos;more
-            </Text>
+          <Box paddingLeft={"3vw"}>
+            <HStack>
+              <Image
+                src="/images/IMG_0528.PNG"
+                width={64}
+                height={64}
+                objectFit="contain"
+                alt="My avatar"
+              />
+              <Text fontWeight={"bold"} fontSize={20}>
+                S&apos;more
+              </Text>
+            </HStack>
           </Box>
           <Box paddingRight={"15"}>
             <HStack>
@@ -49,7 +59,7 @@ const HomePage: NextPage = () => {
           </Box>
         </HStack>
       </Box>
-      <Box h={2000} bg={"#F9F7F1"}>
+      <Box h={1700} bg={"#F9F7F1"}>
         <Center>
           <Stack>
             <Box h={800} paddingTop={"200"} w={"1100px"}>
@@ -64,7 +74,15 @@ const HomePage: NextPage = () => {
             </Box>
             <Box h={300}>
               <HStack>
-                <Box w={"50%"}></Box>
+                <Box w={"50%"}>
+                  <Image
+                    src="/images/bird_aoitori_bluebird.png"
+                    width={"260vw"}
+                    height={"260vh"}
+                    objectFit="contain"
+                    alt="My avatar"
+                  />
+                </Box>
                 <Box w={"50%"}>
                   <Text>気軽なブックマーク</Text>
                   <Heading size="lg">普段の通り</Heading>
@@ -79,12 +97,28 @@ const HomePage: NextPage = () => {
                   <Heading size="lg">2日でブックマークが消えてしまう</Heading>
                   <Heading size="lg">から後回しにせず取り組める！</Heading>
                 </Box>
-                <Box w={"40%"}></Box>
+                <Box w={"40%"}>
+                  <Image
+                    src="/images/bird_aoitori_bluebird.png"
+                    width={"260vw"}
+                    height={"260vh"}
+                    objectFit="contain"
+                    alt="My avatar"
+                  />
+                </Box>
               </HStack>
             </Box>
             <Box h={300}>
               <HStack>
-                <Box w={"50%"}></Box>
+                <Box w={"50%"}>
+                  <Image
+                    src="/images/bird_aoitori_bluebird.png"
+                    width={"260vw"}
+                    height={"260vh"}
+                    objectFit="contain"
+                    alt="My avatar"
+                  />
+                </Box>
                 <Box w={"50%"}>
                   <Text>気軽なブックマーク</Text>
                   <Heading size="lg">AIの導入で</Heading>
@@ -97,13 +131,15 @@ const HomePage: NextPage = () => {
           </Stack>
         </Center>
       </Box>
-      <Box
-        h={"30vh"}
-        bg={"#ECD661"}
-        display={"flex"}
-        borderBottomLeftRadius={1000}
-        borderBottomRightRadius={1000}
-      ></Box>
+      <Box bg={"#ECD661"}>
+        <Box
+          h={"20vh"}
+          bg={"#F9F7F1"}
+          display={"flex"}
+          borderBottomLeftRadius={"50%"}
+          borderBottomRightRadius={"50%"}
+        ></Box>
+      </Box>
       <Box h={"50vh"} bg={"#ECD661"} display={"flex"}>
         <Box
           marginTop={"auto"}
@@ -138,13 +174,26 @@ const HomePage: NextPage = () => {
       <Box h={60} bg={"#F9F7F1"}>
         <Center>
           <HStack align={"Top"} spacing={"20vh"}>
-            <Text fontWeight={"bold"} fontSize={20}>
-              S&apos;more
-            </Text>
+            <Box height={32}>
+              <HStack align={"Top"}>
+                <Image
+                  src="/images/IMG_0528.PNG"
+                  width={64}
+                  height={64}
+                  objectFit="contain"
+                  alt="My avatar"
+                />
+                <Text fontWeight={"bold"} fontSize={20} paddingTop={"20px"}>
+                  S&apos;more
+                </Text>
+              </HStack>
+            </Box>
+
             <Stack>
               <Text fontWeight={"bold"} color={"gray"}>
                 サービスについて
               </Text>
+
               <Text fontWeight={"bold"}>S&apos;moreとは</Text>
               <Text fontWeight={"bold"}>便利な機能</Text>
               <Text fontWeight={"bold"}></Text>
