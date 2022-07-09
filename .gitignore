@@ -4,3 +4,6 @@
 node_module/
 *.swp
 *.swo
+next-app/.swc
+*.pyc
+.env.local
