@@ -6,12 +6,15 @@ import {
     HStack,
     Stack,
     Text,
+    useDisclosure,
     VStack,
 } from '@chakra-ui/react'
 import type { NextPage } from 'next'
 import Image from 'next/image'
-import NextLink from 'next/link'
+import { LoginModal } from '../lib/components/login/loginModal'
+
 const HomePage: NextPage = () => {
+    const { isOpen, onOpen, onClose } = useDisclosure()
     return (
         <>
             <Box
@@ -40,28 +43,30 @@ const HomePage: NextPage = () => {
                     <Box paddingRight={'15'}>
                         <HStack>
                             <Box paddingRight={'15'}>
-                                <Text fontWeight={'bold'}>ログイン</Text>
+                                <Text fontWeight={'bold'} onClick={onOpen}>
+                                    ログイン
+                                </Text>
                             </Box>
                             <Box marginRight={'auto'}>
-                                <NextLink href="/profile" passHref>
-                                    <Button
-                                        color={'white'}
-                                        bg={'#CEA618'}
-                                        px={'25px'}
-                                        borderRadius={'full'}
-                                        width={'150px'}
-                                        alignItems={'center'}
-                                        marginLeft={'auto'}
-                                        marginRight={'auto'}
-                                    >
-                                        今すぐ始める
-                                    </Button>
-                                </NextLink>
+                                <Button
+                                    color={'white'}
+                                    bg={'#CEA618'}
+                                    px={'25px'}
+                                    borderRadius={'full'}
+                                    width={'150px'}
+                                    alignItems={'center'}
+                                    marginLeft={'auto'}
+                                    marginRight={'auto'}
+                                    onClick={onOpen}
+                                >
+                                    今すぐ始める
+                                </Button>
                             </Box>
                         </HStack>
                     </Box>
                 </HStack>
             </Box>
+            <LoginModal isOpen={isOpen} onClose={onClose} />
             <Box h={1700} bg={'#F9F7F1'}>
                 <Center>
                     <Stack>
@@ -202,21 +207,21 @@ const HomePage: NextPage = () => {
                                 記事管理をもっと気軽に。もっと確実に。
                             </Heading>
                             <Box paddingTop={10}></Box>
-                            <NextLink href="/profile" passHref>
-                                <Button
-                                    color={'white'}
-                                    bg={'#68540C'}
-                                    px={'25px'}
-                                    borderRadius={'10'}
-                                    h={'60px'}
-                                    width={'300px'}
-                                    alignItems={'center'}
-                                    marginLeft={'auto'}
-                                    marginRight={'auto'}
-                                >
-                                    <Text fontSize={'2xl'}>今すぐ始める</Text>
-                                </Button>
-                            </NextLink>
+
+                            <Button
+                                color={'white'}
+                                bg={'#68540C'}
+                                px={'25px'}
+                                borderRadius={'10'}
+                                h={'60px'}
+                                width={'300px'}
+                                alignItems={'center'}
+                                marginLeft={'auto'}
+                                marginRight={'auto'}
+                                onClick={onOpen}
+                            >
+                                <Text fontSize={'2xl'}>今すぐ始める</Text>
+                            </Button>
                         </VStack>
                     </Center>
                 </Box>
