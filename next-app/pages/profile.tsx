@@ -1,3 +1,4 @@
+import axios from 'axios'
 import {
   Avatar,
   Icon,
@@ -149,56 +150,15 @@ const profile: React.FC<ProfileProps> = ({
   username = 'アカウント名',
   id = '@seitamuro',
 }) => {
-  const articles = [
-    {
-      title: 'Title',
-      item_id: 'xxxx',
-      url: 'hoge',
-      time: 'forever',
-      limit: 'forever',
-      ai_summary: 'AI summary',
-    },
-    {
-      title: 'Title',
-      item_id: 'xxxx',
-      url: 'hoge',
-      time: 'forever',
-      limit: 'forever',
-      ai_summary: 'AI summary',
-    },
-    {
-      title: 'Title',
-      item_id: 'xxxx',
-      url: 'hoge',
-      time: 'forever',
-      limit: 'forever',
-      ai_summary: 'AI summary',
-    },
-    {
-      title: 'Title',
-      item_id: 'xxxx',
-      url: 'hoge',
-      time: 'forever',
-      limit: 'forever',
-      ai_summary: 'AI summary',
-    },
-    {
-      title: 'Title',
-      item_id: 'xxxx',
-      url: 'hoge',
-      time: 'forever',
-      limit: 'forever',
-      ai_summary: 'AI summary',
-    },
-    {
-      title: 'Title',
-      item_id: 'xxxx',
-      url: 'hoge',
-      time: 'forever',
-      limit: 'forever',
-      ai_summary: 'AI summary',
-    },
-  ]
+  const [articles, setArticles] = useState([])
+
+  useEffect(() => {
+    axios.get('/api/hello').then((d) => {
+      console.log(d)
+      setArticles(JSON.parse(d.data.body).items)
+    })
+  }, [])
+
   return (
     <Container maxW="800px" centerContent>
       <ArticleHeader />
