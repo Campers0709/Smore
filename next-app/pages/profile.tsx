@@ -151,11 +151,17 @@ const profile: React.FC<ProfileProps> = ({
   id = '@seitamuro',
 }) => {
   const [articles, setArticles] = useState([])
+  const [categories, setCategories] = useState([])
 
   useEffect(() => {
     axios.get('/api/hello').then((d) => {
-      console.log(d)
       setArticles(JSON.parse(d.data.body).items)
+    })
+  }, [])
+
+  useEffect(() => {
+    axios.get('/api/category').then((d) => {
+      setCategories(JSON.parse(d.data.body))
     })
   }, [])
 
@@ -174,7 +180,7 @@ const profile: React.FC<ProfileProps> = ({
           <TabPanel>
             <Articles articles={articles} />
           </TabPanel>
-          <TabPanel>2</TabPanel>
+          <TabPanel></TabPanel>
         </TabPanels>
       </Tabs>
     </Container>
