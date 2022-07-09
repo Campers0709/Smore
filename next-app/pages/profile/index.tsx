@@ -178,7 +178,7 @@ const Profile: React.FC<ProfileProps> = ({
   useEffect(() => {
     axios.get('/api/category').then((d) => {
       setCategories(JSON.parse(d.data.body))
-      console.log(JSON.parse)
+      console.log(JSON.parse(d.data.body))
     })
   }, [])
 
