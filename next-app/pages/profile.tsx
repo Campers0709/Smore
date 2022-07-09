@@ -40,9 +40,9 @@ type ArticlesProps = {
 const Articles: React.FC<ArticlesProps> = ({ articles }): JSX.Element => {
   return (
     <Wrap>
-      {articles.map((article, _) => {
+      {articles.map((article, key) => {
         return (
-          <WrapItem>
+          <WrapItem key={key}>
             <Article
               title={article.title}
               url={article.url}
