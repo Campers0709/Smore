@@ -45,6 +45,7 @@ const Articles: React.FC<ArticlesProps> = ({ articles }): JSX.Element => {
           <WrapItem key={key}>
             <Article
               title={article.title}
+              item_id={article.item_id}
               url={article.url}
               limit={article.limit}
               time={article.time}
