@@ -25,6 +25,10 @@ import Image from 'next/image'
 import NextLink from 'next/link'
 import { useEffect, useState } from 'react'
 
+type CategoriesProps = {
+  categories: string[]
+}
+
 type ArticleProps = {
   title: string
   item_id: string
@@ -231,6 +235,7 @@ const Profile: React.FC<ProfileProps> = ({
   useEffect(() => {
     axios.get('/api/category').then((d) => {
       setCategories(JSON.parse(d.data.body))
+      console.log(JSON.parse)
     })
   }, [])
 
