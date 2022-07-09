@@ -62,7 +62,7 @@ const HomePage: NextPage = () => {
             <Box h={1700} bg={'#F9F7F1'}>
                 <Center>
                     <Stack>
-                        <Box h={800} paddingTop={'200'} w={'1100px'}>
+                        <Box h={800} paddingTop={'200'} w={'140vh'}>
                             <VStack>
                                 <Heading textAlign={'center'} size="2xl">
                                     S&apos;moreで記事を管理しよう
@@ -88,7 +88,7 @@ const HomePage: NextPage = () => {
                             </VStack>
                         </Box>
 
-                        <Box h={300}>
+                        <Box h={300} paddingTop={'10vh'}>
                             <HStack>
                                 <Box w={'50%'} paddingLeft={'8vw'}>
                                     <Image
@@ -100,10 +100,18 @@ const HomePage: NextPage = () => {
                                     />
                                 </Box>
                                 <Box w={'50%'}>
-                                    <Text>気軽なブックマーク</Text>
+                                    <Text fontWeight={'bold'} color={'gray'}>
+                                        気軽なブックマーク
+                                    </Text>
                                     <Heading size="lg">普段の通り</Heading>
                                     <Heading size="lg">
-                                        Twitterでいいねをたくさん押そう
+                                        <Text
+                                            color={'#D4B303'}
+                                            display={'inline'}
+                                        >
+                                            Twitterでいいね
+                                        </Text>
+                                        をたくさん押そう
                                     </Heading>
                                 </Box>
                             </HStack>
@@ -111,9 +119,17 @@ const HomePage: NextPage = () => {
                         <Box h={300}>
                             <HStack>
                                 <Box w={'60%'} paddingLeft={10}>
-                                    <Text>行動を起こす期日が明確</Text>
+                                    <Text fontWeight={'bold'} color={'gray'}>
+                                        行動を起こす期日が明確
+                                    </Text>
                                     <Heading size="lg">
-                                        2日でブックマークが消えてしまう
+                                        2日で
+                                        <Text
+                                            color={'#D78100'}
+                                            display={'inline'}
+                                        >
+                                            ブックマークが消えてしまう
+                                        </Text>
                                     </Heading>
                                     <Heading size="lg">
                                         から後回しにせず取り組める！
@@ -142,10 +158,18 @@ const HomePage: NextPage = () => {
                                     />
                                 </Box>
                                 <Box w={'50%'}>
-                                    <Text>S&apos;moreアシスト</Text>
+                                    <Text fontWeight={'bold'} color={'gray'}>
+                                        S&apos;moreアシスト
+                                    </Text>
                                     <Heading size="lg">AIの導入で</Heading>
                                     <Heading size="lg">
-                                        より質の高いサマリ作成をサポート！
+                                        <Text
+                                            color={'#931212'}
+                                            display={'inline'}
+                                        >
+                                            より質の高い
+                                        </Text>
+                                        サマリ作成をサポート！
                                     </Heading>
                                 </Box>
                             </HStack>
