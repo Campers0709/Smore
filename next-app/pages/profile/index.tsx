@@ -6,6 +6,7 @@ import {
   Container,
   Heading,
   HStack,
+  Input,
   Menu,
   MenuButton,
   MenuItem,
@@ -140,6 +141,13 @@ const ArticleHeader: React.FC<{ name: string }> = (props) => {
             </Text>
           </HStack>
         </Box>
+        <Box w={'60vw'}>
+          <Input
+            placeholder="自分のブックマークを検索"
+            variant="filled"
+            borderRadius={'full'}
+          />
+        </Box>
         <Box paddingRight={'15'}>
           <Menu>
             <MenuButton>
@@ -166,7 +174,56 @@ const Profile: React.FC<ProfileProps> = ({
   username = 'アカウント名',
   id = '@seitamuro',
 }) => {
-  const [articles, setArticles] = useState([])
+  const [articles, setArticles] = useState([
+    {
+      title: 'Title',
+      item_id: 'xxxx',
+      url: 'hoge',
+      time: 'forever',
+      limit: 'forever',
+      ai_summary: 'AI summary',
+    },
+    {
+      title: 'Title',
+      item_id: 'xxxx',
+      url: 'hoge',
+      time: 'forever',
+      limit: 'forever',
+      ai_summary: 'AI summary',
+    },
+    {
+      title: 'Title',
+      item_id: 'xxxx',
+      url: 'hoge',
+      time: 'forever',
+      limit: 'forever',
+      ai_summary: 'AI summary',
+    },
+    {
+      title: 'Title',
+      item_id: 'xxxx',
+      url: 'hoge',
+      time: 'forever',
+      limit: 'forever',
+      ai_summary: 'AI summary',
+    },
+    {
+      title: 'Title',
+      item_id: 'xxxx',
+      url: 'hoge',
+      time: 'forever',
+      limit: 'forever',
+      ai_summary: 'AI summary',
+    },
+    {
+      title: 'Title',
+      item_id: 'xxxx',
+      url: 'hoge',
+      time: 'forever',
+      limit: 'forever',
+      ai_summary: 'AI summary',
+    },
+  ])
   const [categories, setCategories] = useState([])
 
   useEffect(() => {
