@@ -87,11 +87,11 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
   )
 }
 
-type MenuProps = {
-  article: ArticleType
+type CategoryMenuProps = {
+  category_id: string
 }
 
-const ArticleMenu: React.FC<MenuProps> = ({ article }): JSX.Element => {
+const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
   const [categories, setCategories] = useState<CategoryProps[]>([])
   const twitter_id = localStorage.getItem('twitter_id')
 
@@ -148,6 +148,47 @@ const ArticleMenu: React.FC<MenuProps> = ({ article }): JSX.Element => {
       </MenuList>
     </Menu>
   )
+}
+
+const CategoryMenu: React.FC<CategoryMenuProps> = ({
+  category_id,
+}): JSX.Element => {
+  const twitter_id = localStorage.getItem('twitter_id')
+
+  return (
+    <Menu>
+      <MenuButton as={Button}>
+        <ChevronDownIcon />
+      </MenuButton>
+      <MenuList>
+        <MenuItem
+          onClick={() =>
+            console.log(`名前変更モーダルを表示 twitter_id='${twitter_id}'`)
+          }
+          as={Button}
+        >
+          名前を変える
+        </MenuItem>
+        <Divider />
+        <MenuItem
+          color="red.400"
+          border="2px"
+          as={Button}
+          onClick={() =>
+            console.log(
+              `記事を削除 category_id='${category_id}' twitter_id='${twitter_id}'`
+            )
+          }
+        >
+          Delete
+        </MenuItem>
+      </MenuList>
+    </Menu>
+  )
+}
+
+type ArticleMenuProps = {
+  article: ArticleType
 }
 
 type ProfileProps = {
@@ -248,7 +289,9 @@ const Category: React.FC<CategoryProps> = ({
         display="flex"
         justifyContent="end"
         color="black"
-      ></Box>
+      >
+        <CategoryMenu category_id={category_id} />
+      </Box>
       <Text>{category_name}</Text>
       <Text>スモアの数: {`${length}`}</Text>
     </Box>
