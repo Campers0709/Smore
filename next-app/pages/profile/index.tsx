@@ -1,25 +1,28 @@
-import axios from 'axios'
+import { ChevronDownIcon } from '@chakra-ui/icons'
 import {
   Avatar,
-  HStack,
+  Box,
   Button,
+  Container,
+  Heading,
+  HStack,
   Menu,
   MenuButton,
-  MenuList,
   MenuItem,
-  Box,
-  Container,
-  Text,
-  Tabs,
-  TabList,
+  MenuList,
   Tab,
-  TabPanels,
+  TabList,
   TabPanel,
+  TabPanels,
+  Tabs,
+  Text,
   Wrap,
   WrapItem,
 } from '@chakra-ui/react'
+import axios from 'axios'
+import Image from 'next/image'
+import NextLink from 'next/link'
 import { useEffect, useState } from 'react'
-import { ChevronDownIcon } from '@chakra-ui/icons'
 
 type CategoriesProps = {
   categories: string[]
@@ -111,35 +114,48 @@ type ProfileProps = {
   id: string
 }
 
-const ArticleHeader: React.FC<{}> = (props) => {
+const ArticleHeader: React.FC<{ name: string }> = (props) => {
+  const username = props.name
   return (
-    <Box paddingTop={'5'} h={'10vh'} position={'fixed'} bg={'white'} w={'100%'}>
+    <Box
+      paddingTop={'5px'}
+      h={'10vh'}
+      position={'fixed'}
+      bg={'white'}
+      w={'100%'}
+      zIndex={1}
+    >
       <HStack justify={'space-between'}>
-        <Box paddingLeft={'20'}>
-          <Text fontWeight={'bold'} fontSize={20}>
-            S&apos;more
-          </Text>
+        <Box paddingLeft={'3vw'}>
+          <HStack>
+            <Image
+              src="/images/IMG_0528.PNG"
+              width={64}
+              height={64}
+              objectFit="contain"
+              alt="My avatar"
+            />
+            <Text fontWeight={'bold'} fontSize={20} color={'gray'}>
+              ホーム
+            </Text>
+          </HStack>
         </Box>
         <Box paddingRight={'15'}>
-          <HStack>
-            <Box paddingRight={'15'}>
-              <Text fontWeight={'bold'}>ログイン</Text>
-            </Box>
-            <Box marginRight={'auto'}>
-              <Button
-                color={'white'}
-                bg={'#CEA618'}
-                px={'25px'}
-                borderRadius={'full'}
-                width={'150px'}
-                alignItems={'center'}
-                marginLeft={'auto'}
-                marginRight={'auto'}
-              >
-                今すぐ始める
-              </Button>
-            </Box>
-          </HStack>
+          <Menu>
+            <MenuButton>
+              <Avatar name={username} border="2px" />
+            </MenuButton>
+            <MenuList>
+              <NextLink href="/profile" passHref>
+                <MenuItem fontWeight={'bold'}>プロフィール</MenuItem>
+              </NextLink>
+              <NextLink href="/" passHref>
+                <MenuItem fontWeight={'bold'} textColor={'red'}>
+                  ログアウト
+                </MenuItem>
+              </NextLink>
+            </MenuList>
+          </Menu>
         </Box>
       </HStack>
     </Box>
@@ -168,20 +184,24 @@ const Profile: React.FC<ProfileProps> = ({
 
   return (
     <Container maxW="800px" centerContent>
-      <ArticleHeader />
+      <ArticleHeader name={username} />
+      <Box h={'10vh'}></Box>
       <Avatar size="2xl" name={username} border="2px" />
-      <Text>{username}</Text>
+      <Box h={'3vh'}></Box>
+      <Heading textAlign={'center'}>{username}</Heading>
+      <Box h={'1vh'}></Box>
       <Text>{id}</Text>
+      <Box h={'2vh'}></Box>
       <Tabs align="center">
         <TabList>
-          <Tab>未分類ブックマーク</Tab>
-          <Tab>カテゴリ一覧</Tab>
+          <Tab fontWeight={'bold'}>未分類ブックマーク</Tab>
+          <Tab fontWeight={'bold'}>カテゴリ一覧</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
             <Articles articles={articles} />
           </TabPanel>
-          <TabPanel></TabPanel>
+          <TabPanel>2</TabPanel>
         </TabPanels>
       </Tabs>
     </Container>
