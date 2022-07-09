@@ -45,6 +45,11 @@ const ChakraExample: NextPage = () => {
           <Heading textAlign={"center"} size="2xl">
             S&apos;moreで記事を管理しよう
           </Heading>
+          <Box paddingTop={"5"}>
+            <Heading textAlign={"center"} size="2xl" textColor={"#4886B4"}>
+              Twitterでいいねした記事
+            </Heading>
+          </Box>
         </Box>
       </Box>
     </>
