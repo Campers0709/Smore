@@ -25,6 +25,10 @@ import {
 import { useEffect, useState } from 'react'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 
+type CategoriesProps = {
+  categories: string[]
+}
+
 type ArticleProps = {
   title: string
   item_id: string
@@ -150,8 +154,8 @@ const profile: React.FC<ProfileProps> = ({
   username = 'アカウント名',
   id = '@seitamuro',
 }) => {
-  const [articles, setArticles] = useState([])
-  const [categories, setCategories] = useState([])
+  const [articles, setArticles] = useState<ArticlesProps | []>([])
+  const [categories, setCategories] = useState<CategoriesProps | []>([])
 
   useEffect(() => {
     axios.get('/api/hello').then((d) => {
@@ -162,6 +166,7 @@ const profile: React.FC<ProfileProps> = ({
   useEffect(() => {
     axios.get('/api/category').then((d) => {
       setCategories(JSON.parse(d.data.body))
+      console.log(JSON.parse)
     })
   }, [])
 
