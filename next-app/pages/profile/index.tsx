@@ -166,8 +166,8 @@ const Profile: React.FC<ProfileProps> = ({
   username = 'アカウント名',
   id = '@seitamuro',
 }) => {
-  const [articles, setArticles] = useState<ArticlesProps | []>([])
-  const [categories, setCategories] = useState<CategoriesProps | []>([])
+  const [articles, setArticles] = useState([])
+  const [categories, setCategories] = useState([])
 
   useEffect(() => {
     axios.get('/api/items').then((d) => {
