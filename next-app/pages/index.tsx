@@ -19,6 +19,7 @@ const HomePage: NextPage = () => {
                 position={'fixed'}
                 bg={'white'}
                 w={'100%'}
+                zIndex={1}
             >
                 <HStack justify={'space-between'}>
                     <Box paddingLeft={'3vw'}>
@@ -62,22 +63,34 @@ const HomePage: NextPage = () => {
                 <Center>
                     <Stack>
                         <Box h={800} paddingTop={'200'} w={'1100px'}>
-                            <Heading textAlign={'center'} size="2xl">
-                                S&apos;moreで記事を管理しよう
-                            </Heading>
-                            <Box paddingTop={'5'}>
-                                <Heading
-                                    textAlign={'center'}
-                                    size="2xl"
-                                    textColor={'#4886B4'}
-                                >
-                                    Twitterでいいねした記事
+                            <VStack>
+                                <Heading textAlign={'center'} size="2xl">
+                                    S&apos;moreで記事を管理しよう
                                 </Heading>
-                            </Box>
+                                <Box paddingTop={'5'}>
+                                    <Heading
+                                        textAlign={'center'}
+                                        size="2xl"
+                                        textColor={'#4886B4'}
+                                    >
+                                        Twitterでいいねした記事
+                                    </Heading>
+                                </Box>
+                                <Box>
+                                    <Image
+                                        src="/images/Group34.png"
+                                        width={'960vw'}
+                                        height={'600vh'}
+                                        objectFit="contain"
+                                        alt="My avatar"
+                                    />
+                                </Box>
+                            </VStack>
                         </Box>
+
                         <Box h={300}>
                             <HStack>
-                                <Box w={'50%'}>
+                                <Box w={'50%'} paddingLeft={'8vw'}>
                                     <Image
                                         src="/images/bird_aoitori_bluebird.png"
                                         width={'260vw'}
@@ -108,7 +121,7 @@ const HomePage: NextPage = () => {
                                 </Box>
                                 <Box w={'40%'}>
                                     <Image
-                                        src="/images/bird_aoitori_bluebird.png"
+                                        src="/images/ninja_kumogakure.png"
                                         width={'260vw'}
                                         height={'260vh'}
                                         objectFit="contain"
@@ -119,9 +132,9 @@ const HomePage: NextPage = () => {
                         </Box>
                         <Box h={300}>
                             <HStack>
-                                <Box w={'50%'}>
+                                <Box w={'50%'} paddingLeft={'10vw'}>
                                     <Image
-                                        src="/images/bird_aoitori_bluebird.png"
+                                        src="/images/ai_computer_sousa_robot.png"
                                         width={'260vw'}
                                         height={'260vh'}
                                         objectFit="contain"
@@ -129,7 +142,7 @@ const HomePage: NextPage = () => {
                                     />
                                 </Box>
                                 <Box w={'50%'}>
-                                    <Text>気軽なブックマーク</Text>
+                                    <Text>S&apos;moreアシスト</Text>
                                     <Heading size="lg">AIの導入で</Heading>
                                     <Heading size="lg">
                                         より質の高いサマリ作成をサポート！
