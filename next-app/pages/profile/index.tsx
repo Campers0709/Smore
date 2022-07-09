@@ -1,6 +1,8 @@
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import {
   Avatar,
+  Divider,
+  Center,
   Box,
   Button,
   Container,
@@ -29,7 +31,7 @@ type CategoriesProps = {
   categories: CategoryProps[]
 }
 
-type ArticleProps = {
+type ArticleType = {
   title: string
   item_id: string
   url: string
@@ -38,8 +40,12 @@ type ArticleProps = {
   ai_summary?: string
 }
 
+type ArticleProps = {
+  article: ArticleType
+}
+
 type ArticlesProps = {
-  articles: ArticleProps[]
+  articles: ArticleType[]
 }
 
 const Articles: React.FC<ArticlesProps> = ({ articles }): JSX.Element => {
@@ -48,14 +54,7 @@ const Articles: React.FC<ArticlesProps> = ({ articles }): JSX.Element => {
       {articles.map((article, key) => {
         return (
           <WrapItem key={key}>
-            <Article
-              title={article.title}
-              item_id={article.item_id}
-              url={article.url}
-              limit={article.limit}
-              time={article.time}
-              ai_summary={article.ai_summary}
-            />
+            <Article article={article} />
           </WrapItem>
         )
       })}
@@ -63,14 +62,11 @@ const Articles: React.FC<ArticlesProps> = ({ articles }): JSX.Element => {
   )
 }
 
-const Article: React.FC<ArticleProps> = ({
-  title,
-  item_id,
-  url,
-  limit,
-  time,
-  ai_summary = 'できたてでおいしい',
-}) => {
+const Categorize = async (category_id: string, item_id: string) => {
+  const { status } = await axios.post('/api/category', { category_id, item_id })
+}
+
+const Article: React.FC<ArticleProps> = ({ article }) => {
   return (
     <Box border="1px" borderColor="gray.200" borderRadius="10px">
       <Box
@@ -81,30 +77,74 @@ const Article: React.FC<ArticleProps> = ({
         justifyContent="end"
         color="black"
       >
-        <ArticleMenu item_id="" />
+        <ArticleMenu article={article} />
       </Box>
-      <Text>{title}</Text>
-      <Text>{limit}</Text>
-      <Text>{time}</Text>
-      <Text>{ai_summary}</Text>
+      <Text>{article.title}</Text>
+      <Text>{article.limit}</Text>
+      <Text>{article.time}</Text>
+      <Text>{article.ai_summary}</Text>
     </Box>
   )
 }
 
 type MenuProps = {
-  item_id: string
+  article: ArticleType
 }
 
-const ArticleMenu: React.FC<MenuProps> = ({ item_id }): JSX.Element => {
+const ArticleMenu: React.FC<MenuProps> = ({ article }): JSX.Element => {
+  const [categories, setCategories] = useState<CategoryProps[]>([])
+  const twitter_id = localStorage.getItem('twitter_id')
+
+  useEffect(() => {
+    axios.get(`/api/category?user_id=${twitter_id}`).then((d) => {
+      setCategories(JSON.parse(d.data.body).categories)
+    })
+  })
+
   return (
     <Menu>
       <MenuButton as={Button}>
         <ChevronDownIcon />
       </MenuButton>
       <MenuList>
-        <MenuItem>要約作成</MenuItem>
-        <MenuItem>要約作成</MenuItem>
-        <MenuItem>要約作成</MenuItem>
+        <MenuItem
+          onClick={() =>
+            console.log(`要約作成画面に遷移 twitter_id='${twitter_id}'`)
+          }
+          as={Button}
+        >
+          要約作成
+        </MenuItem>
+        <Divider />
+        {categories.map((d, i) => {
+          return (
+            <MenuItem
+              key={i}
+              onClick={async () => {
+                console.log(`categorize ${twitter_id} ${d.category_id}`)
+                const { data } = await axios.post('/api/item/categorize', {
+                  twitter_id,
+                  categori_id: d.category_id,
+                })
+                console.log(
+                  `/api/item/categorize response '${
+                    JSON.parse(data.body).status
+                  }'`
+                )
+              }}
+            >
+              {d.category_name}
+            </MenuItem>
+          )
+        })}
+        <MenuItem
+          color="red.400"
+          border="2px"
+          as={Button}
+          onClick={() => console.log(`delete twitter_id='${twitter_id}'`)}
+        >
+          Delete
+        </MenuItem>
       </MenuList>
     </Menu>
   )
@@ -208,9 +248,7 @@ const Category: React.FC<CategoryProps> = ({
         display="flex"
         justifyContent="end"
         color="black"
-      >
-        <ArticleMenu item_id="" />
-      </Box>
+      ></Box>
       <Text>{category_name}</Text>
       <Text>スモアの数: {`${length}`}</Text>
     </Box>
@@ -221,56 +259,7 @@ const Profile: React.FC<ProfileProps> = ({
   username = 'アカウント名',
   id = '@seitamuro',
 }) => {
-  const [articles, setArticles] = useState([
-    {
-      title: 'Title',
-      item_id: 'xxxx',
-      url: 'hoge',
-      time: 'forever',
-      limit: 'forever',
-      ai_summary: 'AI summary',
-    },
-    {
-      title: 'Title',
-      item_id: 'xxxx',
-      url: 'hoge',
-      time: 'forever',
-      limit: 'forever',
-      ai_summary: 'AI summary',
-    },
-    {
-      title: 'Title',
-      item_id: 'xxxx',
-      url: 'hoge',
-      time: 'forever',
-      limit: 'forever',
-      ai_summary: 'AI summary',
-    },
-    {
-      title: 'Title',
-      item_id: 'xxxx',
-      url: 'hoge',
-      time: 'forever',
-      limit: 'forever',
-      ai_summary: 'AI summary',
-    },
-    {
-      title: 'Title',
-      item_id: 'xxxx',
-      url: 'hoge',
-      time: 'forever',
-      limit: 'forever',
-      ai_summary: 'AI summary',
-    },
-    {
-      title: 'Title',
-      item_id: 'xxxx',
-      url: 'hoge',
-      time: 'forever',
-      limit: 'forever',
-      ai_summary: 'AI summary',
-    },
-  ])
+  const [articles, setArticles] = useState([])
   const [categories, setCategories] = useState([])
 
   useEffect(() => {
