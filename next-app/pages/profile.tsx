@@ -1,5 +1,12 @@
 import { 
     Avatar,
+    Icon,
+    HStack,
+    Button,
+    Menu,
+    MenuButton,
+    MenuList,
+    MenuItem,
     Box,
     Container,
     Stack,
@@ -14,10 +21,11 @@ import {
     Wrap,
     WrapItem
 } from "@chakra-ui/react";
-import { jsx } from "@emotion/react";
+import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons"
 
 type ArticleProps = {
     title: string;
+    item_id: string;
     url: string;
     limit: string;
     time: string;
@@ -51,20 +59,51 @@ const Articles: React.FC<ArticlesProps>  = ({
 }
 
 const Article: React.FC<ArticleProps> = ({
-    title = "タイトル",
-    url = "seitamuro.blog",
-    limit = "できたて",
-    time = "10秒",
+    title,
+    item_id,
+    url,
+    limit,
+    time,
     ai_summary = "できたてでおいしい"
 }) => {
     return (
         <Box border="1px" borderColor="gray.200" borderRadius="10px">
-            <Box bg="gray.200" w="200px" h="200px" />
+            <Box
+                bg="gray.200"
+                w="200px"
+                h="200px"
+                display="flex"
+                justifyContent="end"
+                color="black"
+            >
+                <ArticleMenu item_id="" />
+            </Box>
             <Text>{title}</Text>
             <Text>{limit}</Text>
             <Text>{time}</Text>
             <Text>{ai_summary}</Text>
         </Box>
+    )
+}
+
+type MenuProps = {
+    item_id: string
+}
+
+const ArticleMenu: React.FC<MenuProps> = ({
+    item_id
+}): JSX.Element => {
+    return (
+        <Menu>
+            <MenuButton as={Button}>
+                <ChevronDownIcon />
+            </MenuButton>
+            <MenuList>
+                <MenuItem>要約作成</MenuItem>
+                <MenuItem>要約作成</MenuItem>
+                <MenuItem>要約作成</MenuItem>
+            </MenuList>
+        </Menu>
     )
 }
 
@@ -75,11 +114,42 @@ type ProfileProps = {
 
 const ArticleHeader: React.FC<{}> = props => {
     return (
-        <Stack direction="row" spacing={4}>
-            <Box>1</Box>
-            <Box>2</Box>
-            <Box>3</Box>
-        </Stack>
+        <Box
+            paddingTop={"5"}
+            h={"10vh"}
+            position={"fixed"}
+            bg={"white"}
+            w={"100%"}
+        >
+            <HStack justify={"space-between"}>
+            <Box paddingLeft={"20"}>
+                <Text fontWeight={"bold"} fontSize={20}>
+                S&apos;more
+                </Text>
+            </Box>
+            <Box paddingRight={"15"}>
+                <HStack>
+                <Box paddingRight={"15"}>
+                    <Text fontWeight={"bold"}>ログイン</Text>
+                </Box>
+                <Box marginRight={"auto"}>
+                    <Button
+                    color={"white"}
+                    bg={"#CEA618"}
+                    px={"25px"}
+                    borderRadius={"full"}
+                    width={"150px"}
+                    alignItems={"center"}
+                    marginLeft={"auto"}
+                    marginRight={"auto"}
+                    >
+                    今すぐ始める
+                    </Button>
+                </Box>
+                </HStack>
+            </Box>
+            </HStack>
+        </Box>
     )
 }
 
@@ -88,6 +158,7 @@ const profile: React.FC<ProfileProps> = ({username = "アカウント名", id = 
     const articles = [
         {
             title: "Title",
+            item_id: "xxxx",
             url: "hoge",
             time: "forever",
             limit: "forever",
@@ -95,6 +166,7 @@ const profile: React.FC<ProfileProps> = ({username = "アカウント名", id = 
         },
         {
             title: "Title",
+            item_id: "xxxx",
             url: "hoge",
             time: "forever",
             limit: "forever",
@@ -102,6 +174,7 @@ const profile: React.FC<ProfileProps> = ({username = "アカウント名", id = 
         },
         {
             title: "Title",
+            item_id: "xxxx",
             url: "hoge",
             time: "forever",
             limit: "forever",
@@ -109,11 +182,28 @@ const profile: React.FC<ProfileProps> = ({username = "アカウント名", id = 
         },
         {
             title: "Title",
+            item_id: "xxxx",
             url: "hoge",
             time: "forever",
             limit: "forever",
             ai_summary: "AI summary"
-        }
+        },
+        {
+            title: "Title",
+            item_id: "xxxx",
+            url: "hoge",
+            time: "forever",
+            limit: "forever",
+            ai_summary: "AI summary"
+        },
+        {
+            title: "Title",
+            item_id: "xxxx",
+            url: "hoge",
+            time: "forever",
+            limit: "forever",
+            ai_summary: "AI summary"
+        },
     ]
     return (
         <Container maxW="800px" centerContent>
@@ -121,6 +211,7 @@ const profile: React.FC<ProfileProps> = ({username = "アカウント名", id = 
             <Avatar
                 size="2xl"
                 name={username}
+                border="2px"
             />
             <Text>{username}</Text>
             <Text>{id}</Text>
