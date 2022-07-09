@@ -26,7 +26,7 @@ import NextLink from 'next/link'
 import { useEffect, useState } from 'react'
 
 type CategoriesProps = {
-  categories: string[]
+  categories: CategoryProps[]
 }
 
 type ArticleProps = {
@@ -170,6 +170,53 @@ const ArticleHeader: React.FC<{ name: string }> = (props) => {
   )
 }
 
+const Categories: React.FC<CategoriesProps> = ({ categories }): JSX.Element => {
+  return (
+    <Wrap>
+      {categories.map((category, key) => {
+        return (
+          <WrapItem key={key}>
+            <Category
+              category_id={category.category_id}
+              category_name={category.category_name}
+              length={length}
+            />
+          </WrapItem>
+        )
+      })}
+    </Wrap>
+  )
+}
+
+type CategoryProps = {
+  category_id: string
+  category_name: string
+  length: Number
+}
+
+const Category: React.FC<CategoryProps> = ({
+  category_id,
+  category_name,
+  length,
+}): JSX.Element => {
+  return (
+    <Box border="1px" borderColor="gray.200" borderRadius="10px">
+      <Box
+        bg="gray.200"
+        w="200px"
+        h="200px"
+        display="flex"
+        justifyContent="end"
+        color="black"
+      >
+        <ArticleMenu item_id="" />
+      </Box>
+      <Text>{category_name}</Text>
+      <Text>スモアの数: {`${length}`}</Text>
+    </Box>
+  )
+}
+
 const Profile: React.FC<ProfileProps> = ({
   username = 'アカウント名',
   id = '@seitamuro',
@@ -234,8 +281,8 @@ const Profile: React.FC<ProfileProps> = ({
 
   useEffect(() => {
     axios.get('/api/category').then((d) => {
-      setCategories(JSON.parse(d.data.body))
-      console.log(JSON.parse(d.data.body))
+      setCategories(JSON.parse(d.data.body).categories)
+      console.log(JSON.parse(d.data.body).categories)
     })
   }, [])
 
@@ -258,7 +305,9 @@ const Profile: React.FC<ProfileProps> = ({
           <TabPanel>
             <Articles articles={articles} />
           </TabPanel>
-          <TabPanel>2</TabPanel>
+          <TabPanel>
+            <Categories categories={categories} />
+          </TabPanel>
         </TabPanels>
       </Tabs>
     </Container>
