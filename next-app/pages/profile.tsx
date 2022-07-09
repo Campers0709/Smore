@@ -1,7 +1,6 @@
 import axios from 'axios'
 import {
   Avatar,
-  Icon,
   HStack,
   Button,
   Menu,
@@ -10,9 +9,6 @@ import {
   MenuItem,
   Box,
   Container,
-  Stack,
-  Center,
-  VStack,
   Text,
   Tabs,
   TabList,
@@ -150,7 +146,7 @@ const ArticleHeader: React.FC<{}> = (props) => {
   )
 }
 
-const profile: React.FC<ProfileProps> = ({
+const Profile: React.FC<ProfileProps> = ({
   username = 'アカウント名',
   id = '@seitamuro',
 }) => {
@@ -158,7 +154,7 @@ const profile: React.FC<ProfileProps> = ({
   const [categories, setCategories] = useState<CategoriesProps | []>([])
 
   useEffect(() => {
-    axios.get('/api/hello').then((d) => {
+    axios.get('/api/items').then((d) => {
       setArticles(JSON.parse(d.data.body).items)
     })
   }, [])
@@ -192,4 +188,4 @@ const profile: React.FC<ProfileProps> = ({
   )
 }
 
-export default profile
+export default Profile
