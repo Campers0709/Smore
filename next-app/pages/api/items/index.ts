@@ -6,8 +6,22 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
+  if (!req.url) {
+    return res.status(400)
+  }
+  const url = new URL('http://aaa.com' + req.url)
+  const user_id = url.searchParams.get('user_id')
+    ? url.searchParams.get('user_id')
+    : ''
+  const category_id = url.searchParams.get('category_id')
+    ? url.searchParams.get('category_id')
+    : ''
+  if (!user_id) {
+    res.status(400)
+  }
   const API_URL = process.env.API_URL
-  console.log(API_URL)
-  const { data } = await axios.get(`${API_URL}test_v1/items`)
+  const req_url = `${API_URL}test_v1/v2/items?user_id=${user_id}&category_id=${category_id}`
+  console.log(req_url)
+  const { data } = await axios.get(req_url)
   res.status(200).json(data)
 }

@@ -337,6 +337,7 @@ const Category: React.FC<CategoryProps> = ({
   )
 }
 
+const uid_key = 'user_id'
 const username_key = 'name'
 const at_twitter_id_key = 'username'
 
@@ -348,17 +349,15 @@ const Profile: NextPage = () => {
   const [user_id, setUserID] = useState('')
 
   useEffect(() => {
-    const uid = localStorage.getItem('user_id')
-
-    if (uid !== null) {
-      setUserID(uid)
-    }
-  }, [])
-
-  useEffect(() => {
+    const uid = localStorage.getItem(uid_key)
     const name = localStorage.getItem(username_key)
     const id = localStorage.getItem(at_twitter_id_key)
 
+    if (uid !== null) {
+      setUserID(uid)
+    } else {
+      setUserID('')
+    }
     if (name !== null) {
       setUsername(name)
     } else {
@@ -370,15 +369,9 @@ const Profile: NextPage = () => {
     } else {
       setID('@twitter_id')
     }
-  }, [])
-
-  useEffect(() => {
-    axios.get(`/api/items?user_id=${user_id}?category=""`).then((d) => {
-      setArticles(JSON.parse(d.data.body).items)
+    axios.get(`/api/items?user_id=${uid}`).then((d) => {
+      setArticles(d.data.body.items)
     })
-  }, [user_id])
-
-  useEffect(() => {
     axios.get('/api/category').then((d) => {
       setCategories(JSON.parse(d.data.body).categories)
     })
