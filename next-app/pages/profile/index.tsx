@@ -140,6 +140,7 @@ const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
                   const { data } = await axios.post('/api/item/categorize', {
                     user_id,
                     category_id: d.category_id,
+                    item_id: article.item_id,
                   })
                   console.log(
                     `/api/item/categorize response '${
