@@ -81,8 +81,8 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
   console.log(article)
   return (
     <Box border="1px" borderColor="gray.200" borderRadius="10px" maxW="200px">
-      <CImage
-        src="qiita-ogp-3b6fcfdd74755a85107071ffc3155898.png"
+      <Box
+        bg="gray.400"
         w="200px"
         h="100px"
         display="flex"
@@ -91,7 +91,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
         zIndex={2}
       >
         <ArticleMenu article={article} />
-      </CImage>
+      </Box>
       <Text zIndex={1}>{article.tweet.substr(0, 30)}</Text>
       <Text zIndex={1}>{article.limit}</Text>
       <Text zIndex={1}>{article.time}</Text>
