@@ -69,7 +69,7 @@ const Article: React.FC<ArticleProps> = ({
   url,
   limit,
   time,
-  ai_summary = 'できたてでおいしい',
+  ai_summary = 'summary:',
 }) => {
   return (
     <Box border="1px" borderColor="gray.200" borderRadius="10px">
@@ -84,8 +84,8 @@ const Article: React.FC<ArticleProps> = ({
         <ArticleMenu item_id="" />
       </Box>
       <Text>{title}</Text>
-      <Text>{limit}</Text>
-      <Text>{time}</Text>
+      {/* <Text>{limit}</Text> */}
+      {/* <Text>{time}</Text> */}
       <Text>{ai_summary}</Text>
     </Box>
   )
@@ -198,70 +198,20 @@ const ArticleHeader: React.FC<{ name: string }> = (props) => {
 const CategoryDetail: React.FC<CategoryDetailProps> = ({
   categoryname = 'カテゴリ名',
   username = 'アカウント名',
-  id = '@seitamuro',
+  id = 'seitamuro',
 }) => {
-  const [articles, setArticles] = useState([
-    {
-      title: 'Title',
-      item_id: 'xxxx',
-      url: 'hoge',
-      time: 'forever',
-      limit: 'forever',
-      ai_summary: 'AI summary',
-    },
-    {
-      title: 'Title',
-      item_id: 'xxxx',
-      url: 'hoge',
-      time: 'forever',
-      limit: 'forever',
-      ai_summary: 'AI summary',
-    },
-    {
-      title: 'Title',
-      item_id: 'xxxx',
-      url: 'hoge',
-      time: 'forever',
-      limit: 'forever',
-      ai_summary: 'AI summary',
-    },
-    {
-      title: 'Title',
-      item_id: 'xxxx',
-      url: 'hoge',
-      time: 'forever',
-      limit: 'forever',
-      ai_summary: 'AI summary',
-    },
-    {
-      title: 'Title',
-      item_id: 'xxxx',
-      url: 'hoge',
-      time: 'forever',
-      limit: 'forever',
-      ai_summary: 'AI summary',
-    },
-    {
-      title: 'Title',
-      item_id: 'xxxx',
-      url: 'hoge',
-      time: 'forever',
-      limit: 'forever',
-      ai_summary: 'AI summary',
-    },
-  ])
+  const [articles, setArticles] = useState([])
   const [categories, setCategories] = useState([])
 
   useEffect(() => {
-    axios.get('/api/items').then((d) => {
-      setArticles(JSON.parse(d.data.body).items)
-    })
-  }, [])
+    const user_id = localStorage.getItem('user_id')
 
-  useEffect(() => {
-    axios.get('/api/category').then((d) => {
-      setCategories(JSON.parse(d.data.body))
-      console.log(JSON.parse)
+    axios.get(`/api/items?user_id=${user_id ? user_id : ''}`).then((d) => {
+      setArticles(d.data.body.items)
+    })
+
+    axios.get(`/api/category?user_id=${user_id ? user_id : ''}`).then((d) => {
+      setCategories(d.data.body)
     })
   }, [])
 
