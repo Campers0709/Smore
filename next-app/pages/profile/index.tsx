@@ -1,42 +1,41 @@
 import { ChevronDownIcon } from '@chakra-ui/icons'
-import { useRouter } from 'next/router'
-import type { NextPage } from 'next'
 import {
   Avatar,
-  Divider,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton,
-  ModalFooter,
-  useDisclosure,
-  Center,
-  MenuGroup,
   Box,
   Button,
   Container,
+  Divider,
   Heading,
   HStack,
   Input,
   Menu,
   MenuButton,
+  MenuGroup,
   MenuItem,
   MenuList,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Tab,
   TabList,
   TabPanel,
   TabPanels,
   Tabs,
   Text,
+  useDisclosure,
   Wrap,
   WrapItem,
 } from '@chakra-ui/react'
 import axios from 'axios'
+import type { NextPage } from 'next'
 import Image from 'next/image'
 import NextLink from 'next/link'
-import { useEffect, useState, createRef } from 'react'
+import { useRouter } from 'next/router'
+import { createRef, useEffect, useState } from 'react'
 
 type CategoriesProps = {
   categories: CategoryProps[]
@@ -108,6 +107,7 @@ const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
   const router = useRouter()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const categoryRef = createRef<HTMLInputElement>()
+  const Airticle = article
 
   useEffect(() => {
     axios.get(`/api/category?user_id=${user_id}`).then((d) => {
@@ -124,6 +124,7 @@ const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
         <MenuItem
           onClick={() => {
             //console.log(`要約作成画面に遷移 user_id='${user_id}'`)
+            localStorage.setItem('article', JSON.stringify(article))
             router.push('/edit/summary')
           }}
         >
