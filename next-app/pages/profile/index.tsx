@@ -111,9 +111,9 @@ const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
 
   useEffect(() => {
     axios.get(`/api/category?user_id=${user_id}`).then((d) => {
-      setCategories(JSON.parse(d.data.body).categories)
+      setCategories(d.data.body.category)
     })
-  })
+  }, [])
 
   return (
     <Menu>
@@ -373,7 +373,7 @@ const Profile: NextPage = () => {
       setArticles(d.data.body.items)
     })
     axios.get(`/api/category?user_id=${uid}`).then((d) => {
-      setCategories(d.data.body.categories)
+      setCategories(d.data.body.category)
     })
   }, [])
 

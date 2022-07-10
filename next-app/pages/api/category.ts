@@ -7,16 +7,23 @@ export default async function handler(
   res: NextApiResponse<any>
 ) {
   const API_URL = process.env.API_URL
-  const urlParams = new URLSearchParams(req.url)
 
   if (req.method == 'GET') {
+    const url = new URL('http://aaa.com' + req.url)
+    const user_id = url.searchParams.get('user_id')
+      ? url.searchParams.get('user_id')
+      : ''
+    if (!user_id) {
+      res.status(400)
+    }
+
     const { data } = await axios.get(
-      `${API_URL}test_v1/category?user_id=${urlParams.get('user_id')}`
+      `${API_URL}test_v1/v2/category?user_id=${user_id}`
     )
     res.status(200).json(data)
   } else if (req.method == 'POST') {
     const { data } = await axios.post(`${API_URL}text_v1/category`, {
-      user_id: urlParams.get('user_id'),
+      user_id: req.body.user_id,
     })
     res.status(200).json(data)
   }
