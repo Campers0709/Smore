@@ -4,7 +4,16 @@ import type { NextPage } from 'next'
 import {
   Avatar,
   Divider,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  ModalFooter,
+  useDisclosure,
   Center,
+  MenuGroup,
   Box,
   Button,
   Container,
@@ -95,11 +104,12 @@ type CategoryMenuProps = {
 
 const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
   const [categories, setCategories] = useState<CategoryProps[]>([])
-  const twitter_id = localStorage.getItem('twitter_id')
+  const user_id = localStorage.getItem('user_id')
   const router = useRouter()
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   useEffect(() => {
-    axios.get(`/api/category?user_id=${twitter_id}`).then((d) => {
+    axios.get(`/api/category?user_id=${user_id}`).then((d) => {
       setCategories(JSON.parse(d.data.body).categories)
     })
   })
@@ -112,40 +122,56 @@ const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
       <MenuList>
         <MenuItem
           onClick={() => {
-            console.log(`要約作成画面に遷移 twitter_id='${twitter_id}'`)
+            //console.log(`要約作成画面に遷移 user_id='${user_id}'`)
             router.push('/edit/summary')
           }}
-          as={Button}
         >
           要約作成
         </MenuItem>
         <Divider />
-        {categories.map((d, i) => {
-          return (
-            <MenuItem
-              key={i}
-              onClick={async () => {
-                console.log(`categorize ${twitter_id} ${d.category_id}`)
-                const { data } = await axios.post('/api/item/categorize', {
-                  twitter_id,
-                  categori_id: d.category_id,
-                })
-                console.log(
-                  `/api/item/categorize response '${
-                    JSON.parse(data.body).status
-                  }'`
-                )
-              }}
-            >
-              {d.category_name}
-            </MenuItem>
-          )
-        })}
+        <MenuGroup title="カテゴリ">
+          {categories.map((d, i) => {
+            return (
+              <MenuItem
+                key={i}
+                onClick={async () => {
+                  console.log(`categorize ${user_id} ${d.category_id}`)
+                  const { data } = await axios.post('/api/item/categorize', {
+                    user_id,
+                    category_id: d.category_id,
+                  })
+                  console.log(
+                    `/api/item/categorize response '${
+                      JSON.parse(data.body).status
+                    }'`
+                  )
+                }}
+              >
+                {d.category_name}
+              </MenuItem>
+            )
+          })}
+          <MenuItem onClick={onOpen}>カテゴリを追加する</MenuItem>
+          <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>新しいカテゴリ名</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>ModalBody</ModalBody>
+
+              <ModalFooter>
+                <Button colorScheme="blue" mr={3} onClick={onClose}>
+                  Close
+                </Button>
+                <Button variant="ghost">Secondary Action</Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        </MenuGroup>
         <MenuItem
           color="red.400"
           border="2px"
-          as={Button}
-          onClick={() => console.log(`delete twitter_id='${twitter_id}'`)}
+          onClick={() => console.log(`delete user_id='${user_id}'`)}
         >
           Delete
         </MenuItem>
@@ -157,7 +183,7 @@ const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
 const CategoryMenu: React.FC<CategoryMenuProps> = ({
   category_id,
 }): JSX.Element => {
-  const twitter_id = localStorage.getItem('twitter_id')
+  const user_id = localStorage.getItem('user_id')
 
   return (
     <Menu>
@@ -167,7 +193,7 @@ const CategoryMenu: React.FC<CategoryMenuProps> = ({
       <MenuList>
         <MenuItem
           onClick={() =>
-            console.log(`名前変更モーダルを表示 twitter_id='${twitter_id}'`)
+            console.log(`名前変更モーダルを表示 user_id='${user_id}'`)
           }
           as={Button}
         >
@@ -180,7 +206,7 @@ const CategoryMenu: React.FC<CategoryMenuProps> = ({
           as={Button}
           onClick={() =>
             console.log(
-              `記事を削除 category_id='${category_id}' twitter_id='${twitter_id}'`
+              `記事を削除 category_id='${category_id}' user_id='${user_id}'`
             )
           }
         >
@@ -297,8 +323,8 @@ const Category: React.FC<CategoryProps> = ({
   )
 }
 
-const username_key = '未定義'
-const at_twitter_id_key = '未定義'
+const username_key = 'name'
+const at_twitter_id_key = 'username'
 
 const Profile: NextPage = () => {
   const [articles, setArticles] = useState([])
@@ -332,7 +358,6 @@ const Profile: NextPage = () => {
   useEffect(() => {
     axios.get('/api/category').then((d) => {
       setCategories(JSON.parse(d.data.body).categories)
-      console.log(JSON.parse(d.data.body).categories)
     })
   }, [])
 
