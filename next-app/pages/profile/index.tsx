@@ -1,4 +1,6 @@
 import { ChevronDownIcon } from '@chakra-ui/icons'
+import { useRouter } from 'next/router'
+import type { NextPage } from 'next'
 import {
   Avatar,
   Divider,
@@ -94,6 +96,7 @@ type CategoryMenuProps = {
 const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
   const [categories, setCategories] = useState<CategoryProps[]>([])
   const twitter_id = localStorage.getItem('twitter_id')
+  const router = useRouter()
 
   useEffect(() => {
     axios.get(`/api/category?user_id=${twitter_id}`).then((d) => {
@@ -108,9 +111,10 @@ const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
       </MenuButton>
       <MenuList>
         <MenuItem
-          onClick={() =>
+          onClick={() => {
             console.log(`要約作成画面に遷移 twitter_id='${twitter_id}'`)
-          }
+            router.push('/edit/summary')
+          }}
           as={Button}
         >
           要約作成
@@ -189,11 +193,6 @@ const CategoryMenu: React.FC<CategoryMenuProps> = ({
 
 type ArticleMenuProps = {
   article: ArticleType
-}
-
-type ProfileProps = {
-  username: string
-  id: string
 }
 
 const ArticleHeader: React.FC<{ name: string }> = (props) => {
@@ -298,12 +297,31 @@ const Category: React.FC<CategoryProps> = ({
   )
 }
 
-const Profile: React.FC<ProfileProps> = ({
-  username = 'アカウント名',
-  id = '@seitamuro',
-}) => {
+const username_key = '未定義'
+const at_twitter_id_key = '未定義'
+
+const Profile: NextPage = () => {
   const [articles, setArticles] = useState([])
   const [categories, setCategories] = useState([])
+  const [username, setUsername] = useState('')
+  const [id, setID] = useState('')
+
+  useEffect(() => {
+    const name = localStorage.getItem(username_key)
+    const id = localStorage.getItem(at_twitter_id_key)
+
+    if (name !== null) {
+      setUsername(name)
+    } else {
+      setUsername('Account')
+    }
+
+    if (id !== null) {
+      setID(id)
+    } else {
+      setID('@twitter_id')
+    }
+  }, [])
 
   useEffect(() => {
     axios.get('/api/items').then((d) => {
