@@ -36,7 +36,7 @@ import {
 import axios from 'axios'
 import Image from 'next/image'
 import NextLink from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, createRef } from 'react'
 
 type CategoriesProps = {
   categories: CategoryProps[]
@@ -107,6 +107,7 @@ const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
   const user_id = localStorage.getItem('user_id')
   const router = useRouter()
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const categoryRef = createRef<HTMLInputElement>()
 
   useEffect(() => {
     axios.get(`/api/category?user_id=${user_id}`).then((d) => {
@@ -157,10 +158,23 @@ const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
             <ModalContent>
               <ModalHeader>新しいカテゴリ名</ModalHeader>
               <ModalCloseButton />
-              <ModalBody>ModalBody</ModalBody>
+              <ModalBody>
+                <Input placeholder="新しいカテゴリ名" ref={categoryRef} />
+              </ModalBody>
 
               <ModalFooter>
-                <Button colorScheme="blue" mr={3} onClick={onClose}>
+                <Button
+                  colorScheme="blue"
+                  mr={3}
+                  onClick={() => {
+                    if (categoryRef.current !== null) {
+                      console.log(`${categoryRef.current.value}`)
+                    } else {
+                      console.log(`categoryRef.current is null`)
+                    }
+                    onClose()
+                  }}
+                >
                   Close
                 </Button>
                 <Button variant="ghost">Secondary Action</Button>
