@@ -108,6 +108,7 @@ const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const categoryRef = createRef<HTMLInputElement>()
   const Airticle = article
+  const [inputCategoryName, setInputCategoryName] = useState('')
 
   useEffect(() => {
     axios.get(`/api/category?user_id=${user_id}`).then((d) => {
@@ -159,7 +160,13 @@ const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
               <ModalHeader>新しいカテゴリ名</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
-                <Input placeholder="新しいカテゴリ名" ref={categoryRef} />
+                <Input
+                  placeholder="新しいカテゴリ名"
+                  ref={categoryRef}
+                  onChange={(event: any) => {
+                    setInputCategoryName(event.target.value)
+                  }}
+                />
               </ModalBody>
 
               <ModalFooter>
@@ -169,15 +176,18 @@ const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
                   onClick={() => {
                     if (categoryRef.current !== null) {
                       console.log(`${categoryRef.current.value}`)
+                      axios.post(`/api/category`, {
+                        user_id,
+                        category_name: inputCategoryName,
+                      })
                     } else {
                       console.log(`categoryRef.current is null`)
                     }
                     onClose()
                   }}
                 >
-                  Close
+                  追加
                 </Button>
-                <Button variant="ghost">Secondary Action</Button>
               </ModalFooter>
             </ModalContent>
           </Modal>
