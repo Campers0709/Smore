@@ -19,7 +19,7 @@ import axios from 'axios'
 import Image from 'next/image'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const SummaryCreate: React.FC<{
   AirticleName: string
@@ -116,6 +116,15 @@ const SummaryCreate: React.FC<{
 }
 const ArticleHeader: React.FC<{ name: string }> = (props) => {
   const username = props.name
+
+  const [profile_image_url, set_profile_image_url] = useState('')
+  useEffect(() => {
+    const url = localStorage.getItem('profile_image_url')
+    if (url) {
+      set_profile_image_url(url)
+    }
+  }, [])
+
   return (
     <Box
       paddingTop={'5px'}
@@ -150,7 +159,11 @@ const ArticleHeader: React.FC<{ name: string }> = (props) => {
         <Box paddingRight={'15'}>
           <Menu>
             <MenuButton>
-              <Avatar name={username} border="2px" />
+              {profile_image_url !== '' ? (
+                <Avatar name={username} src={profile_image_url} border="2px" />
+              ) : (
+                ''
+              )}
             </MenuButton>
             <MenuList>
               <NextLink href="/profile" passHref>
