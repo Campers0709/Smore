@@ -6,6 +6,7 @@ import {
   Container,
   Divider,
   Heading,
+  Image as CImage,
   HStack,
   Input,
   Menu,
@@ -77,22 +78,24 @@ const Categorize = async (category_id: string, item_id: string) => {
 }
 
 const Article: React.FC<ArticleProps> = ({ article }) => {
+  console.log(article)
   return (
-    <Box border="1px" borderColor="gray.200" borderRadius="10px">
-      <Box
-        bg="gray.200"
+    <Box border="1px" borderColor="gray.200" borderRadius="10px" maxW="200px">
+      <CImage
+        src="qiita-ogp-3b6fcfdd74755a85107071ffc3155898.png"
         w="200px"
-        h="200px"
+        h="100px"
         display="flex"
         justifyContent="end"
         color="black"
+        zIndex={2}
       >
         <ArticleMenu article={article} />
-      </Box>
-      <Text>{article.title}</Text>
-      <Text>{article.limit}</Text>
-      <Text>{article.time}</Text>
-      <Text>{article.ai_summary}</Text>
+      </CImage>
+      <Text zIndex={1}>{article.tweet.substr(0, 30)}</Text>
+      <Text zIndex={1}>{article.limit}</Text>
+      <Text zIndex={1}>{article.time}</Text>
+      <Text zIndex={1}>{article.ai_summary}</Text>
     </Box>
   )
 }
