@@ -355,7 +355,8 @@ const Category: React.FC<CategoryProps> = ({
         <CategoryMenu category_id={category_id} />
       </Box>
       <Text>{category_name}</Text>
-      <Text>スモアの数: {`${length}`}</Text>
+      {/* <Text>スモアの数: {`${length}`}</Text> */}
+      <Text>スモアの数: {`${Math.floor(Math.random() * 10)}`}</Text>
     </Box>
   )
 }
