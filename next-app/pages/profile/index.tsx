@@ -372,8 +372,8 @@ const Profile: NextPage = () => {
     axios.get(`/api/items?user_id=${uid}`).then((d) => {
       setArticles(d.data.body.items)
     })
-    axios.get('/api/category').then((d) => {
-      setCategories(JSON.parse(d.data.body).categories)
+    axios.get(`/api/category?user_id=${uid}`).then((d) => {
+      setCategories(d.data.body.categories)
     })
   }, [])
 
