@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   Center,
   Heading,
   HStack,
@@ -12,14 +13,18 @@ import {
   Stack,
   Text,
   Textarea,
+  VStack,
 } from '@chakra-ui/react'
+import axios from 'axios'
 import Image from 'next/image'
 import NextLink from 'next/link'
+import { useState } from 'react'
 
 const SummaryCreate: React.FC<{
   AirticleName: string
   AirticleUrl: string
   UserName: string
+  item_id: number
 }> = (props) => {
   // const AirticleName = props.AirticleName
   // const AirticleUrl = props.AirticleUrl
@@ -27,13 +32,19 @@ const SummaryCreate: React.FC<{
   const AirticleName = 'Reactで画像を表示する方法'
   const AirticleUrl = 'https://qiita.com/ytnd0928/items/22704b1c47c20e1bd83f'
   const UserName = 'Account'
+  const item_id = props.item_id
+  const [text, setText] = useState('')
+
+  const handleChange = (e: any) => {
+    setText(() => e.target.value)
+  }
 
   return (
     <>
       <ArticleHeader name={UserName} />
       <Box h={'10vh'}></Box>
       <Center>
-        <Stack>
+        <Stack display={'flex'}>
           <Box w={'70vw'}>
             <Heading size="md" color={'gray'}>
               要約作成
@@ -44,35 +55,45 @@ const SummaryCreate: React.FC<{
               <Text>{AirticleUrl}</Text>
             </HStack>
             <Box h={'5vh'}></Box>
-            <HStack>
-              {/* <Box w={'50vw'}>
-                <iframe
-                  id="inlineFrameExample"
-                  title="Inline Frame Example"
-                  width="500px"
-                  height="500px"
-                  src={AirticleUrl}
-                ></iframe>
-                <object
-                  data="https://theuselessweb.com/"
-                  width="500px"
-                  height="500px"
-                  type="text/html"
-                ></object>
-                <embed
-                  type="text/html"
-                  src={AirticleUrl}
-                  width="500px"
-                  height="500px"
-                ></embed>
-              </Box> */}
-              <Box w={'100vw'}>
+
+            <VStack>
+              <Box w={'70vw'}>
                 <Textarea
                   placeholder="要約 200字程度でまとめてみよう"
                   h={'30vh'}
+                  value={text}
+                  onChange={handleChange}
                 />
               </Box>
-            </HStack>
+              <Box>
+                <Button
+                  color={'white'}
+                  bg={'#CEA618'}
+                  px={'25px'}
+                  borderRadius={'full'}
+                  width={'150px'}
+                  alignItems={'center'}
+                  marginLeft={'auto'}
+                  marginRight={'auto'}
+                  onClick={async () => {
+                    console.log(`read ${item_id} ${text}`)
+                    const { data } = await axios.post('/api/item/read', {
+                      item_id: item_id,
+                      user_text: text,
+                    })
+                    console.log(
+                      `/api/item/read response '${
+                        JSON.parse(data.body).status
+                      }'`
+                    )
+                  }}
+                >
+                  作成
+                </Button>
+              </Box>
+            </VStack>
+
+            <Box h={'5vh'}></Box>
           </Box>
         </Stack>
       </Center>
