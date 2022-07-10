@@ -18,6 +18,7 @@ import {
 import axios from 'axios'
 import Image from 'next/image'
 import NextLink from 'next/link'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 
 const SummaryCreate: React.FC<{
@@ -25,19 +26,29 @@ const SummaryCreate: React.FC<{
   AirticleUrl: string
   UserName: string
   item_id: number
-}> = (props) => {
+}> = (props): JSX.Element => {
   // const AirticleName = props.AirticleName
   // const AirticleUrl = props.AirticleUrl
   // const UserName = props.UserName
   const AirticleName = 'Reactで画像を表示する方法'
   const AirticleUrl = 'https://qiita.com/ytnd0928/items/22704b1c47c20e1bd83f'
-  const UserName = 'Account'
+  const UserNameString = localStorage.getItem('name')
   const item_id = props.item_id
   const [text, setText] = useState('')
-
+  const router = useRouter()
+  if (!UserNameString) {
+    throw new Error('記事取得に失敗しました')
+  }
+  const UserName = UserNameString
   const handleChange = (e: any) => {
     setText(() => e.target.value)
   }
+  const articleString = localStorage.getItem('article')
+  if (!articleString) {
+    throw new Error('記事取得に失敗しました')
+  }
+  const article = JSON.parse(articleString)
+  console.log('article', article)
 
   return (
     <>
@@ -51,8 +62,10 @@ const SummaryCreate: React.FC<{
             </Heading>
             <Box h={'2vh'}></Box>
             <HStack>
-              <Heading size="lg">{AirticleName}</Heading>
-              <Text>{AirticleUrl}</Text>
+              <Heading size="lg">{article.tweet}</Heading>
+              <NextLink target="_blank" href={article.url} passHref>
+                <Text>{article.url}</Text>
+              </NextLink>
             </HStack>
             <Box h={'5vh'}></Box>
 
@@ -76,9 +89,9 @@ const SummaryCreate: React.FC<{
                   marginLeft={'auto'}
                   marginRight={'auto'}
                   onClick={async () => {
-                    console.log(`read ${item_id} ${text}`)
+                    console.log(`read ${article.item_id} ${text}`)
                     const { data } = await axios.post('/api/item/read', {
-                      item_id: item_id,
+                      item_id: article.item_id,
                       user_text: text,
                     })
                     console.log(
@@ -86,6 +99,7 @@ const SummaryCreate: React.FC<{
                         JSON.parse(data.body).status
                       }'`
                     )
+                    router.push('/profile')
                   }}
                 >
                   作成
