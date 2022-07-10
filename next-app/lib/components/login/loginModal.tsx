@@ -13,15 +13,26 @@ import {
 } from '@chakra-ui/react'
 import Image from 'next/image'
 import NextLink from 'next/link'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
+import axios from 'axios'
 
 export const LoginModal: React.FC<{ isOpen: boolean; onClose: () => void }> = (
   props
 ) => {
   const [inputTwitterName, setInputTwitterName] = useState('')
-  const saveTwitterName = () => {
-    localStorage.setItem('twitter_id', inputTwitterName)
-    window.location.replace('http://127.0.0.1:3000/profile')
+  const router = useRouter()
+
+  const saveTwitterName = async () => {
+    const { data } = await axios.post('/api/getHiddenTwitterId', {
+      user_name: inputTwitterName,
+    })
+    localStorage.setItem('user_id', data.user_id)
+    localStorage.setItem('name', data.name)
+    localStorage.setItem('username', data.username)
+    localStorage.setItem('profile_image_url', data.profile_image_url)
+    router.push('/profile')
+    // window.location.replace('http://127.0.0.1:3000/profile')
   }
 
   return (
@@ -61,7 +72,7 @@ export const LoginModal: React.FC<{ isOpen: boolean; onClose: () => void }> = (
               alignItems={'center'}
               marginLeft={'auto'}
               marginRight={'auto'}
-              onClick={() => {
+              onClick={async () => {
                 saveTwitterName()
               }}
             >
