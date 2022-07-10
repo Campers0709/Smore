@@ -24,6 +24,14 @@ type GetTwitterAccessTokenRes = {
   error_msg?: string
 }
 
+const createFormParams = (params: Object) => {
+  return Object.keys(params)
+    .map(
+      (key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
+    )
+    .join('&')
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<GetTwitterAccessTokenRes>
@@ -33,6 +41,7 @@ export default async function handler(
     return res.status(400).json({ error_msg: 'bad request' })
   }
 
+  const params = createFormParams(req.body)
   if (!process.env.BEARER_TOKEN) {
     console.error('process.env.BEARER_TOKENがない')
   }
@@ -42,7 +51,7 @@ export default async function handler(
       Authorization: getHeaderAuthValue(),
     },
   }
-  const { data } = await axios.post(getAccessTokenURL, req.body, config)
+  const { data } = await axios.post(getAccessTokenURL, params, config)
   console.log(data.response)
 
   return res.status(200).json({ access_token: 'aaaaaa' })

@@ -16,7 +16,7 @@ export const getTwitterUserAuthURL = () => {
   const challenge = getRandomString()
   localStorage.setItem('challenge', challenge)
 
-  return `https://twitter.com/i/oauth2/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL}&scope=${AUTH_SCOPE}&state=${state}&code_challenge=challenge&code_challenge_method=plain`
+  return `https://twitter.com/i/oauth2/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL}&scope=${AUTH_SCOPE}&state=${state}&code_challenge=bbb&code_challenge_method=plain`
 }
 
 export const getTwitterAccessTokenParams = (querystring: string) => {
@@ -38,7 +38,7 @@ export const getTwitterAccessTokenParams = (querystring: string) => {
   let params = new URLSearchParams()
   params.append('grant_type', 'authorization_code')
   params.append('code', code)
-  params.append('code_verifier', 'challenge')
+  params.append('code_verifier', 'bbb')
   params.append('client_id', CLIENT_ID)
   params.append('redirect_uri', REDIRECT_URL)
   console.log(params)

@@ -81,20 +81,12 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
   console.log(article)
   return (
     <Box border="1px" borderColor="gray.200" borderRadius="10px" maxW="200px">
-      <Box
-        bg="gray.400"
-        w="200px"
-        h="100px"
-        display="flex"
-        justifyContent="end"
-        color="black"
-        zIndex={2}
-      >
+      <Box bg="gray.400" w="200px" h="100px" display="flex" zIndex={2}>
         <ArticleMenu article={article} />
       </Box>
       <Text zIndex={1}>{article.tweet.substr(0, 30)}</Text>
-      <Text zIndex={1}>{article.limit}</Text>
-      <Text zIndex={1}>{article.time}</Text>
+      {/* <Text zIndex={1}>{article.limit}</Text> */}
+      {/* <Text zIndex={1}>{article.time}</Text> */}
       <Text zIndex={1}>{article.ai_summary}</Text>
     </Box>
   )
@@ -374,11 +366,16 @@ const Profile: NextPage = () => {
   const [username, setUsername] = useState('')
   const [id, setID] = useState('')
   const [user_id, setUserID] = useState('')
+  const [profile_image_url, set_profile_image_url] = useState('')
 
   useEffect(() => {
     const uid = localStorage.getItem(uid_key)
     const name = localStorage.getItem(username_key)
     const id = localStorage.getItem(at_twitter_id_key)
+    const url = localStorage.getItem('profile_image_url')
+    if (url) {
+      set_profile_image_url(url)
+    }
 
     if (uid !== null) {
       setUserID(uid)
@@ -408,7 +405,7 @@ const Profile: NextPage = () => {
     <Container maxW="800px" centerContent>
       <ArticleHeader name={username} />
       <Box h={'10vh'}></Box>
-      <Avatar size="2xl" name={username} border="2px" />
+      <Avatar size="2xl" name={username} src={profile_image_url} border="2px" />
       <Box h={'3vh'}></Box>
       <Heading textAlign={'center'}>{username}</Heading>
       <Box h={'1vh'}></Box>
