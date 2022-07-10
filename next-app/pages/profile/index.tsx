@@ -142,11 +142,8 @@ const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
                     category_id: d.category_id,
                     item_id: article.item_id,
                   })
-                  console.log(
-                    `/api/item/categorize response '${
-                      JSON.parse(data.body).status
-                    }'`
-                  )
+                  console.log(data)
+                  console.log(`/api/item/categorize response '${data.body}'`)
                 }}
               >
                 {d.category_name}

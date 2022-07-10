@@ -11,7 +11,7 @@ export default async function handler(
   if (req.method == 'GET') {
   } else if (req.method == 'POST') {
     const { data } = await axios.post(
-      `${API_URL}test_v1/item/categorize`,
+      `${API_URL}test_v1/v2/item/categorize`,
       req.body
     )
     res.status(200).json(data)
