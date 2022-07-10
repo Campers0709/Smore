@@ -143,9 +143,7 @@ const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
                     item_id: article.item_id,
                   })
                   console.log(
-                    `/api/item/categorize response '${
-                      JSON.parse(data.body).status
-                    }'`
+                    `/api/item/categorize response '${data.body.status}'`
                   )
                 }}
               >
@@ -346,6 +344,15 @@ const Profile: NextPage = () => {
   const [categories, setCategories] = useState([])
   const [username, setUsername] = useState('')
   const [id, setID] = useState('')
+  const [user_id, setUserID] = useState('')
+
+  useEffect(() => {
+    const uid = localStorage.getItem('user_id')
+
+    if (uid !== null) {
+      setUserID(uid)
+    }
+  }, [])
 
   useEffect(() => {
     const name = localStorage.getItem(username_key)
@@ -365,10 +372,10 @@ const Profile: NextPage = () => {
   }, [])
 
   useEffect(() => {
-    axios.get('/api/items').then((d) => {
+    axios.get(`/api/items?user_id=${user_id}?category=""`).then((d) => {
       setArticles(JSON.parse(d.data.body).items)
     })
-  }, [])
+  }, [user_id])
 
   useEffect(() => {
     axios.get('/api/category').then((d) => {
