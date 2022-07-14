@@ -30,29 +30,36 @@ const SummaryCreate: React.FC<{
   // const AirticleName = props.AirticleName
   // const AirticleUrl = props.AirticleUrl
   // const UserName = props.UserName
-  const AirticleName = 'Reactで画像を表示する方法'
-  const AirticleUrl = 'https://qiita.com/ytnd0928/items/22704b1c47c20e1bd83f'
-  const UserNameString = localStorage.getItem('name')
-  const item_id = props.item_id
+  // const AirticleName = 'Reactで画像を表示する方法'
+  // const AirticleUrl = 'https://qiita.com/ytnd0928/items/22704b1c47c20e1bd83f'
+  const [userName, setUserName] = useState('')
   const [text, setText] = useState('')
-  const router = useRouter()
-  if (!UserNameString) {
-    throw new Error('記事取得に失敗しました')
-  }
-  const UserName = UserNameString
-  const handleChange = (e: any) => {
-    setText(() => e.target.value)
-  }
-  const articleString = localStorage.getItem('article')
-  if (!articleString) {
-    throw new Error('記事取得に失敗しました')
-  }
-  const article = JSON.parse(articleString)
-  console.log('article', article)
+  const [article, setArticle] = useState<any>({
+    tweet: '',
+    url: '',
+    item_id: null,
+  })
+  useEffect(() => {
+    const userNameStore = localStorage.getItem('name')
+    if (!userNameStore) {
+      throw new Error('記事取得に失敗しました')
+    }
+    setUserName(userNameStore)
 
+    const articleString = localStorage.getItem('article')
+    if (!articleString) {
+      throw new Error('記事取得に失敗しました')
+    }
+    setArticle(JSON.parse(articleString))
+  }, [])
+  const router = useRouter()
+
+  const handleChange = (e: any) => {
+    setText(e.target.value)
+  }
   return (
     <>
-      <ArticleHeader name={UserName} />
+      <ArticleHeader name={userName} />
       <Box h={'10vh'}></Box>
       <Center>
         <Stack display={'flex'}>

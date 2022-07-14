@@ -46,8 +46,8 @@ type ArticleType = {
   title: string
   item_id: string
   url: string
-  limit: string
-  time: string
+  tweet: string
+  user_text: string
   ai_summary?: string
 }
 
@@ -85,8 +85,6 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
         <ArticleMenu article={article} />
       </Box>
       <Text zIndex={1}>{article.tweet.substr(0, 30)}</Text>
-      {/* <Text zIndex={1}>{article.limit}</Text> */}
-      {/* <Text zIndex={1}>{article.time}</Text> */}
       <Text zIndex={1}>{article.ai_summary}</Text>
     </Box>
   )
