@@ -11,13 +11,3 @@ services:
     user: "root"
     image:
       react_server_team42
-
-  server:
-    build:
-      context: "server"
-    volumes:
-      - ./server:/root/src
-    ports:
-      - "3003:3003"
-    container_name: campers_server
-    tty: true
