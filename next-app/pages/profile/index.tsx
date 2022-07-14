@@ -109,7 +109,7 @@ const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
     axios.get(`/api/category?user_id=${user_id}`).then((d) => {
       setCategories(d.data.body.category)
     })
-  }, [])
+  }, [user_id])
 
   return (
     <Menu>
