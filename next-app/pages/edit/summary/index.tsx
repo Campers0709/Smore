@@ -1,43 +1,29 @@
 import {
-  Avatar,
   Box,
   Button,
   Center,
   Heading,
   HStack,
-  Input,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Stack,
   Text,
   Textarea,
   VStack,
 } from '@chakra-ui/react'
 import axios from 'axios'
-import Image from 'next/image'
-import NextLink from 'next/link'
 import { useRouter } from 'next/router'
+import NextLink from 'next/link'
 import { useState, useEffect } from 'react'
+import Header from '../../../components/Header'
+import type { Article } from '../../../types/Article'
 
-const SummaryCreate: React.FC<{
-  AirticleName: string
-  AirticleUrl: string
-  UserName: string
-  item_id: number
-}> = (props): JSX.Element => {
-  // const AirticleName = props.AirticleName
-  // const AirticleUrl = props.AirticleUrl
-  // const UserName = props.UserName
-  // const AirticleName = 'Reactで画像を表示する方法'
-  // const AirticleUrl = 'https://qiita.com/ytnd0928/items/22704b1c47c20e1bd83f'
+const SummaryCreate: React.FC<{}> = (): JSX.Element => {
   const [userName, setUserName] = useState('')
   const [text, setText] = useState('')
-  const [article, setArticle] = useState<any>({
+  const [article, setArticle] = useState<Article>({
     tweet: '',
     url: '',
-    item_id: null,
+    user_text: '',
+    item_id: 0,
   })
   useEffect(() => {
     const userNameStore = localStorage.getItem('name')
@@ -59,7 +45,7 @@ const SummaryCreate: React.FC<{
   }
   return (
     <>
-      <ArticleHeader name={userName} />
+      <Header name={userName} />
       <Box h={'10vh'}></Box>
       <Center>
         <Stack display={'flex'}>
@@ -119,73 +105,6 @@ const SummaryCreate: React.FC<{
         </Stack>
       </Center>
     </>
-  )
-}
-const ArticleHeader: React.FC<{ name: string }> = (props) => {
-  const username = props.name
-
-  const [profile_image_url, set_profile_image_url] = useState('')
-  useEffect(() => {
-    const url = localStorage.getItem('profile_image_url')
-    if (url) {
-      set_profile_image_url(url)
-    }
-  }, [])
-
-  return (
-    <Box
-      paddingTop={'5px'}
-      h={'10vh'}
-      position={'fixed'}
-      bg={'white'}
-      w={'100%'}
-      zIndex={1}
-    >
-      <HStack justify={'space-between'}>
-        <Box paddingLeft={'3vw'}>
-          <HStack>
-            <Image
-              src="/images/IMG_0528.PNG"
-              width={64}
-              height={64}
-              objectFit="contain"
-              alt="My avatar"
-            />
-            <Text fontWeight={'bold'} fontSize={20} color={'gray'}>
-              ホーム
-            </Text>
-          </HStack>
-        </Box>
-        <Box w={'60vw'}>
-          <Input
-            placeholder="自分のブックマークを検索"
-            variant="filled"
-            borderRadius={'full'}
-          />
-        </Box>
-        <Box paddingRight={'15'}>
-          <Menu>
-            <MenuButton>
-              {profile_image_url !== '' ? (
-                <Avatar name={username} src={profile_image_url} border="2px" />
-              ) : (
-                ''
-              )}
-            </MenuButton>
-            <MenuList>
-              <NextLink href="/profile" passHref>
-                <MenuItem fontWeight={'bold'}>プロフィール</MenuItem>
-              </NextLink>
-              <NextLink href="/" passHref>
-                <MenuItem fontWeight={'bold'} textColor={'red'}>
-                  ログアウト
-                </MenuItem>
-              </NextLink>
-            </MenuList>
-          </Menu>
-        </Box>
-      </HStack>
-    </Box>
   )
 }
 

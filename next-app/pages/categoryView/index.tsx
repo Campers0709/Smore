@@ -1,12 +1,9 @@
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import {
-  Avatar,
   Box,
   Button,
   Container,
   Heading,
-  HStack,
-  Input,
   Menu,
   MenuButton,
   MenuItem,
@@ -21,25 +18,16 @@ import {
   WrapItem,
 } from '@chakra-ui/react'
 import axios from 'axios'
-import Image from 'next/image'
-import NextLink from 'next/link'
 import { useEffect, useState } from 'react'
+import type { Article } from '../../types/Article'
+import Header from '../../components/Header'
 
 type CategoriesProps = {
   categories: string[]
 }
 
-type ArticleProps = {
-  title: string
-  item_id: string
-  url: string
-  limit: string
-  time: string
-  ai_summary?: string
-}
-
 type ArticlesProps = {
-  articles: ArticleProps[]
+  articles: Article[]
 }
 
 const Articles: React.FC<ArticlesProps> = ({ articles }): JSX.Element => {
@@ -49,11 +37,10 @@ const Articles: React.FC<ArticlesProps> = ({ articles }): JSX.Element => {
         return (
           <WrapItem key={key}>
             <Article
-              title={article.title}
               item_id={article.item_id}
+              tweet={article.tweet}
+              user_text={article.user_text}
               url={article.url}
-              limit={article.limit}
-              time={article.time}
               ai_summary={article.ai_summary}
             />
           </WrapItem>
@@ -63,12 +50,11 @@ const Articles: React.FC<ArticlesProps> = ({ articles }): JSX.Element => {
   )
 }
 
-const Article: React.FC<ArticleProps> = ({
-  title,
+const Article: React.FC<Article> = ({
+  tweet,
+  user_text,
   item_id,
   url,
-  limit,
-  time,
   ai_summary = 'summary:',
 }) => {
   return (
@@ -83,9 +69,7 @@ const Article: React.FC<ArticleProps> = ({
       >
         <ArticleMenu item_id="" />
       </Box>
-      <Text>{title}</Text>
-      {/* <Text>{limit}</Text> */}
-      {/* <Text>{time}</Text> */}
+      <Text>{tweet}</Text>
       <Text>{ai_summary}</Text>
     </Box>
   )
@@ -127,74 +111,6 @@ type CategoryDetailProps = {
   id: string
 }
 
-const ArticleHeader: React.FC<{ name: string }> = (props) => {
-  const username = props.name
-
-  const [profile_image_url, set_profile_image_url] = useState('')
-  useEffect(() => {
-    const url = localStorage.getItem('profile_image_url')
-    if (url) {
-      set_profile_image_url(url)
-    }
-  }, [])
-
-  return (
-    <Box
-      paddingTop={'5px'}
-      h={'10vh'}
-      position={'fixed'}
-      bg={'white'}
-      w={'100%'}
-      zIndex={1}
-    >
-      <HStack justify={'space-between'}>
-        <Box paddingLeft={'3vw'}>
-          <HStack>
-            <Image
-              src="/images/IMG_0528.PNG"
-              width={64}
-              height={64}
-              objectFit="contain"
-              alt="My avatar"
-            />
-            <Text fontWeight={'bold'} fontSize={20} color={'gray'}>
-              ホーム
-            </Text>
-          </HStack>
-        </Box>
-        <Box w={'60vw'}>
-          <Input
-            placeholder="自分のブックマークを検索"
-            variant="filled"
-            borderRadius={'full'}
-          />
-        </Box>
-        <Box paddingRight={'15'}>
-          <Menu>
-            <MenuButton>
-              {profile_image_url !== '' ? (
-                <Avatar name={username} src={profile_image_url} border="2px" />
-              ) : (
-                ''
-              )}
-            </MenuButton>
-            <MenuList>
-              <NextLink href="/profile" passHref>
-                <MenuItem fontWeight={'bold'}>プロフィール</MenuItem>
-              </NextLink>
-              <NextLink href="/" passHref>
-                <MenuItem fontWeight={'bold'} textColor={'red'}>
-                  ログアウト
-                </MenuItem>
-              </NextLink>
-            </MenuList>
-          </Menu>
-        </Box>
-      </HStack>
-    </Box>
-  )
-}
-
 const CategoryDetail: React.FC<CategoryDetailProps> = ({
   categoryname = 'カテゴリ名',
   username = 'アカウント名',
@@ -217,7 +133,7 @@ const CategoryDetail: React.FC<CategoryDetailProps> = ({
 
   return (
     <Container maxW="800px" centerContent>
-      <ArticleHeader name={username} />
+      <Header name={username} />
       <Tabs align="center" colorScheme="black">
         <TabList>
           <Tab fontWeight={'bold'}>

@@ -37,26 +37,18 @@ import Image from 'next/image'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { createRef, useEffect, useState } from 'react'
+import type { Article } from '../../types/Article'
 
 type CategoriesProps = {
   categories: CategoryProps[]
 }
 
-type ArticleType = {
-  title: string
-  item_id: string
-  url: string
-  tweet: string
-  user_text: string
-  ai_summary?: string
-}
-
 type ArticleProps = {
-  article: ArticleType
+  article: Article
 }
 
 type ArticlesProps = {
-  articles: ArticleType[]
+  articles: Article[]
 }
 
 const Articles: React.FC<ArticlesProps> = ({ articles }): JSX.Element => {
@@ -235,7 +227,7 @@ const CategoryMenu: React.FC<CategoryMenuProps> = ({
 }
 
 type ArticleMenuProps = {
-  article: ArticleType
+  article: Article
 }
 
 const ArticleHeader: React.FC<{ name: string }> = (props) => {
