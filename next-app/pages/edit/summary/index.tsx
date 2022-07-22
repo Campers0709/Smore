@@ -87,11 +87,7 @@ const SummaryCreate: React.FC<{}> = (): JSX.Element => {
                       item_id: article.item_id,
                       user_text: text,
                     })
-                    console.log(
-                      `/api/item/read response '${
-                        JSON.parse(data.body).status
-                      }'`
-                    )
+                    console.log(`/api/item/read response '${data.body}'`)
                     router.push('/profile')
                   }}
                 >

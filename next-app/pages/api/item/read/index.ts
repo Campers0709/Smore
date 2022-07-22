@@ -10,7 +10,10 @@ export default async function handler(
   console.log(API_URL)
   if (req.method == 'GET') {
   } else if (req.method == 'POST') {
-    const { data } = await axios.post(`${API_URL}test_v1/item/read`, req.body)
+    const { data } = await axios.post(
+      `${API_URL}test_v1/v2/item/read`,
+      req.body
+    )
     res.status(200).json(data)
   }
 }

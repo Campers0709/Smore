@@ -65,9 +65,9 @@ const Articles: React.FC<ArticlesProps> = ({ articles }): JSX.Element => {
   )
 }
 
-const Categorize = async (category_id: string, item_id: string) => {
-  const { status } = await axios.post('/api/category', { category_id, item_id })
-}
+// const Categorize = async (category_id: string, item_id: string) => {
+//   const { status } = await axios.post('/api/category', { category_id, item_id })
+// }
 
 const Article: React.FC<ArticleProps> = ({ article }) => {
   console.log(article)
@@ -88,17 +88,20 @@ type CategoryMenuProps = {
 
 const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
   const [categories, setCategories] = useState<CategoryProps[]>([])
+  const [inputCategoryName, setInputCategoryName] = useState('')
   const user_id = localStorage.getItem('user_id')
   const router = useRouter()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const categoryRef = createRef<HTMLInputElement>()
-  const Airticle = article
-  const [inputCategoryName, setInputCategoryName] = useState('')
 
-  useEffect(() => {
+  const updateCategories = () => {
     axios.get(`/api/category?user_id=${user_id}`).then((d) => {
       setCategories(d.data.body.category)
     })
+  }
+
+  useEffect(() => {
+    updateCategories()
   }, [user_id])
 
   return (
@@ -132,6 +135,9 @@ const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
                   console.log(
                     `/api/item/categorize response '${data.body.status}'`
                   )
+                  if (data.body.status === 'OK') {
+                    updateCategories()
+                  }
                 }}
               >
                 {d.category_name}
@@ -139,6 +145,7 @@ const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
             )
           })}
           <MenuItem onClick={onOpen}>カテゴリを追加する</MenuItem>
+
           <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
