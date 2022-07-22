@@ -6,8 +6,7 @@ services:
       - ./:/home/root
     container_name: campers_next-app
     ports:
-      - "3000:3000"
+      - "4444:4444"
     stdin_open: true
     user: "root"
-    image:
-      react_server_team42
+    image: react_server_team42
