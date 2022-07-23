@@ -43,9 +43,13 @@ const HomePage: NextPage = () => {
           <Box paddingRight={'15'}>
             <HStack>
               <Box paddingRight={'15'}>
-                <Text fontWeight={'bold'} onClick={onOpen}>
+                <Button
+                  fontWeight={'bold'}
+                  onClick={onOpen}
+                  borderRadius={'full'}
+                >
                   ログイン
-                </Text>
+                </Button>
               </Box>
               <Box marginRight={'auto'}>
                 <Button
