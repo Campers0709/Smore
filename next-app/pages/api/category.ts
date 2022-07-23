@@ -26,6 +26,7 @@ export default async function handler(
       user_id: req.body.user_id,
       category_name: req.body.category_name,
     })
+    console.log('カテゴリ追加', req.body, data)
     res.status(200).json(data)
   }
 }

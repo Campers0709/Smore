@@ -21,7 +21,7 @@ export default async function handler(
   }
   const API_URL = process.env.API_URL
   const req_url = `${API_URL}test_v1/v2/items?user_id=${user_id}&category_id=${category_id}`
-  console.log(req_url)
   const { data } = await axios.get(req_url)
+  console.log(req_url, data)
   res.status(200).json(data)
 }

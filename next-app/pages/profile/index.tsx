@@ -7,7 +7,6 @@ import {
   Divider,
   Heading,
   Image as CImage,
-  HStack,
   Input,
   Menu,
   MenuButton,
@@ -38,6 +37,7 @@ import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { createRef, useEffect, useState } from 'react'
 import type { Article } from '../../types/Article'
+import Header from '../../components/Header'
 
 type CategoriesProps = {
   categories: CategoryProps[]
@@ -237,74 +237,6 @@ type ArticleMenuProps = {
   article: Article
 }
 
-const ArticleHeader: React.FC<{ name: string }> = (props) => {
-  const username = props.name
-
-  const [profile_image_url, set_profile_image_url] = useState('')
-  useEffect(() => {
-    const url = localStorage.getItem('profile_image_url')
-    if (url) {
-      set_profile_image_url(url)
-    }
-  }, [])
-
-  return (
-    <Box
-      paddingTop={'5px'}
-      h={'10vh'}
-      position={'fixed'}
-      bg={'white'}
-      w={'100%'}
-      zIndex={1}
-    >
-      <HStack justify={'space-between'}>
-        <Box paddingLeft={'3vw'}>
-          <HStack>
-            <Image
-              src="/images/IMG_0528.PNG"
-              width={64}
-              height={64}
-              objectFit="contain"
-              alt="My avatar"
-            />
-            <Text fontWeight={'bold'} fontSize={20} color={'gray'}>
-              ホーム
-            </Text>
-          </HStack>
-        </Box>
-        <Box w={'60vw'}>
-          <Input
-            placeholder="自分のブックマークを検索"
-            variant="filled"
-            borderRadius={'full'}
-          />
-        </Box>
-        <Box paddingRight={'15'}>
-          <Menu>
-            <MenuButton>
-              {profile_image_url !== '' ? (
-                <Avatar name={username} src={profile_image_url} border="2px" />
-              ) : (
-                ''
-              )}
-            </MenuButton>
-            <MenuList>
-              <NextLink href="/profile" passHref>
-                <MenuItem fontWeight={'bold'}>プロフィール</MenuItem>
-              </NextLink>
-              <NextLink href="/" passHref>
-                <MenuItem fontWeight={'bold'} textColor={'red'}>
-                  ログアウト
-                </MenuItem>
-              </NextLink>
-            </MenuList>
-          </Menu>
-        </Box>
-      </HStack>
-    </Box>
-  )
-}
-
 const Categories: React.FC<CategoriesProps> = ({ categories }): JSX.Element => {
   return (
     <Wrap>
@@ -400,7 +332,7 @@ const Profile: NextPage = () => {
 
   return (
     <Container maxW="800px" centerContent>
-      <ArticleHeader name={username} />
+      <Header name={username} />
       <Box h={'10vh'}></Box>
       <Avatar size="2xl" name={username} src={profile_image_url} border="2px" />
       <Box h={'3vh'}></Box>

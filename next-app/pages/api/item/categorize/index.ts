@@ -7,7 +7,7 @@ export default async function handler(
   res: NextApiResponse<any>
 ) {
   const API_URL = process.env.API_URL
-  console.log(API_URL)
+  console.log(API_URL, req.body)
   if (req.method == 'GET') {
   } else if (req.method == 'POST') {
     const { data } = await axios.post(
