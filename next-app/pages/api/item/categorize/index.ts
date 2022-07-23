@@ -7,13 +7,13 @@ export default async function handler(
   res: NextApiResponse<any>
 ) {
   const API_URL = process.env.API_URL
-  console.log(API_URL, req.body)
   if (req.method == 'GET') {
   } else if (req.method == 'POST') {
     const { data } = await axios.post(
       `${API_URL}test_v1/v2/item/categorize`,
       req.body
     )
+    console.log(API_URL, req.body, data)
     res.status(200).json(data)
   }
 }

@@ -32,8 +32,6 @@ import {
 } from '@chakra-ui/react'
 import axios from 'axios'
 import type { NextPage } from 'next'
-import Image from 'next/image'
-import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { createRef, useEffect, useState } from 'react'
 import type { Article } from '../../types/Article'
@@ -126,15 +124,11 @@ const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
               <MenuItem
                 key={i}
                 onClick={async () => {
-                  console.log(`categorize ${user_id} ${d.category_id}`)
                   const { data } = await axios.post('/api/item/categorize', {
                     user_id,
                     category_id: d.category_id,
                     item_id: article.item_id,
                   })
-                  console.log(
-                    `/api/item/categorize response '${data.body.status}'`
-                  )
                   if (data.body.status === 'OK') {
                     updateCategories()
                   }
@@ -302,9 +296,7 @@ const Profile: NextPage = () => {
     const name = localStorage.getItem(username_key)
     const id = localStorage.getItem(at_twitter_id_key)
     const url = localStorage.getItem('profile_image_url')
-    if (url) {
-      set_profile_image_url(url)
-    }
+    console.warn(uid, name, id, url)
 
     if (uid !== null) {
       setUserID(uid)
@@ -316,19 +308,26 @@ const Profile: NextPage = () => {
     } else {
       setUsername('Account')
     }
-
     if (id !== null) {
       setID(id)
     } else {
       setID('@twitter_id')
     }
-    axios.get(`/api/items?user_id=${uid}`).then((d) => {
+    if (url) {
+      set_profile_image_url(url)
+    }
+  }, [])
+
+  useEffect(() => {
+    console.warn(user_id)
+    if (!user_id) return
+    axios.get(`/api/items?user_id=${user_id}`).then((d) => {
       setArticles(d.data.body.items)
     })
-    axios.get(`/api/category?user_id=${uid}`).then((d) => {
+    axios.get(`/api/category?user_id=${user_id}`).then((d) => {
       setCategories(d.data.body.category)
     })
-  }, [])
+  }, [user_id])
 
   return (
     <Container maxW="800px" centerContent>
