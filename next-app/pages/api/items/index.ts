@@ -15,7 +15,7 @@ export default async function handler(
     : ''
   const category_id = url.searchParams.get('category_id')
     ? url.searchParams.get('category_id')
-    : ''
+    : 'null'
   if (!user_id) {
     res.status(400)
   }

@@ -159,13 +159,13 @@ const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
                 <Button
                   colorScheme="blue"
                   mr={3}
-                  onClick={() => {
+                  onClick={async () => {
                     if (categoryRef.current !== null) {
-                      console.log(`${categoryRef.current.value}`)
-                      axios.post(`/api/category`, {
+                      await axios.post(`/api/category`, {
                         user_id,
                         category_name: inputCategoryName,
                       })
+                      updateCategories()
                     } else {
                       console.log(`categoryRef.current is null`)
                     }
@@ -319,15 +319,32 @@ const Profile: NextPage = () => {
   }, [])
 
   useEffect(() => {
-    console.warn(user_id)
     if (!user_id) return
+    updateItems()
+    updateCategories()
+  }, [user_id])
+
+  const updateItems = () => {
     axios.get(`/api/items?user_id=${user_id}`).then((d) => {
       setArticles(d.data.body.items)
     })
+  }
+
+  const updateCategories = () => {
     axios.get(`/api/category?user_id=${user_id}`).then((d) => {
       setCategories(d.data.body.category)
     })
-  }, [user_id])
+  }
+
+  const updateData = (index: number) => {
+    console.log('updateData', index)
+    if (index === 0) {
+      updateItems()
+    }
+    if (index === 1) {
+      updateCategories()
+    }
+  }
 
   return (
     <Container maxW="800px" centerContent>
@@ -339,7 +356,12 @@ const Profile: NextPage = () => {
       <Box h={'1vh'}></Box>
       <Text>{id}</Text>
       <Box h={'2vh'}></Box>
-      <Tabs align="center">
+      <Tabs
+        align="center"
+        onChange={(index: number) => {
+          updateData(index)
+        }}
+      >
         <TabList>
           <Tab fontWeight={'bold'}>未分類ブックマーク</Tab>
           <Tab fontWeight={'bold'}>カテゴリ一覧</Tab>
