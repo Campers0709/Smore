@@ -22,10 +22,6 @@ import { useEffect, useState } from 'react'
 import type { Article } from '../../types/Article'
 import Header from '../../components/Header'
 
-type CategoriesProps = {
-  categories: string[]
-}
-
 type ArticlesProps = {
   articles: Article[]
 }
@@ -36,13 +32,7 @@ const Articles: React.FC<ArticlesProps> = ({ articles }): JSX.Element => {
       {articles.map((article, key) => {
         return (
           <WrapItem key={key}>
-            <Article
-              item_id={article.item_id}
-              tweet={article.tweet}
-              user_text={article.user_text}
-              url={article.url}
-              ai_summary={article.ai_summary}
-            />
+            <Article {...article} />
           </WrapItem>
         )
       })}

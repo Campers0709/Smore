@@ -20,10 +20,13 @@ const SummaryCreate: React.FC<{}> = (): JSX.Element => {
   const [userName, setUserName] = useState('')
   const [text, setText] = useState('')
   const [article, setArticle] = useState<Article>({
-    tweet: '',
+    item_id: '0',
+    user_id: '0',
+    category_id: null,
     url: '',
+    tweet: '',
     user_text: '',
-    item_id: 0,
+    liked_at: '',
   })
   useEffect(() => {
     const userNameStore = localStorage.getItem('name')

@@ -240,7 +240,7 @@ const Categories: React.FC<CategoriesProps> = ({ categories }): JSX.Element => {
             <Category
               category_id={category.category_id}
               category_name={category.category_name}
-              length={length}
+              length={category.length}
             />
           </WrapItem>
         )
@@ -253,29 +253,31 @@ type CategoryProps = {
   category_id: string
   category_name: string
   length: Number
+  children?: JSX.Element | JSX.Element[]
 }
 
 const Category: React.FC<CategoryProps> = ({
   category_id,
   category_name,
   length,
-}): JSX.Element => {
+}) => {
   return (
-    <Box border="1px" borderColor="gray.200" borderRadius="10px">
-      <Box
-        bg="gray.200"
-        w="200px"
-        h="200px"
-        display="flex"
-        justifyContent="end"
-        color="black"
-      >
-        <CategoryMenu category_id={category_id} />
+    <>
+      <Box border="1px" borderColor="gray.200" borderRadius="10px">
+        <Box
+          bg="gray.200"
+          w="200px"
+          h="200px"
+          display="flex"
+          justifyContent="end"
+          color="black"
+        >
+          <CategoryMenu category_id={category_id} />
+        </Box>
+        <Text>{category_name}</Text>
+        <Text>スモアの数: {`${length}`}</Text>
       </Box>
-      <Text>{category_name}</Text>
-      {/* <Text>スモアの数: {`${length}`}</Text> */}
-      <Text>スモアの数: {`${Math.floor(Math.random() * 10)}`}</Text>
-    </Box>
+    </>
   )
 }
 
