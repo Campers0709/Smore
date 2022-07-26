@@ -84,7 +84,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
 }
 
 type CategoryMenuProps = {
-  category_id: string
+  category_id: number
 }
 
 const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
@@ -105,6 +105,17 @@ const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
     updateCategories()
   }, [user_id])
 
+  const itemCategorize = async (category_id: number) => {
+    const { data } = await axios.post('/api/item/categorize', {
+      user_id,
+      category_id: category_id,
+      item_id: article.item_id,
+    })
+    if (data.body.status === 'OK') {
+      updateCategories()
+    }
+  }
+
   return (
     <Menu>
       <MenuButton as={Button}>
@@ -113,7 +124,6 @@ const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
       <MenuList>
         <MenuItem
           onClick={() => {
-            //console.log(`要約作成画面に遷移 user_id='${user_id}'`)
             localStorage.setItem('article', JSON.stringify(article))
             router.push('/edit/summary')
           }}
@@ -127,14 +137,7 @@ const ArticleMenu: React.FC<ArticleMenuProps> = ({ article }): JSX.Element => {
               <MenuItem
                 key={i}
                 onClick={async () => {
-                  const { data } = await axios.post('/api/item/categorize', {
-                    user_id,
-                    category_id: d.category_id,
-                    item_id: article.item_id,
-                  })
-                  if (data.body.status === 'OK') {
-                    updateCategories()
-                  }
+                  itemCategorize(d.category_id)
                 }}
               >
                 {d.category_name}
@@ -253,7 +256,7 @@ const Categories: React.FC<CategoriesProps> = ({ categories }): JSX.Element => {
 }
 
 type CategoryProps = {
-  category_id: string
+  category_id: number
   category_name: string
   length: Number
   children?: JSX.Element | JSX.Element[]
