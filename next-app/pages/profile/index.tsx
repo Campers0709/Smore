@@ -68,14 +68,17 @@ const Articles: React.FC<ArticlesProps> = ({ articles }): JSX.Element => {
 // }
 
 const Article: React.FC<ArticleProps> = ({ article }) => {
-  console.log(article)
   return (
     <Box border="1px" borderColor="gray.200" borderRadius="10px" maxW="200px">
-      <Box bg="gray.400" w="200px" h="100px" display="flex" zIndex={2}>
+      <Box bg="gray.100" w="200px" h="100px" display="flex" zIndex={2}>
         <ArticleMenu article={article} />
+        {article.preview_image_url ? (
+          <CImage src={article.preview_image_url} w="155px" />
+        ) : (
+          <></>
+        )}
       </Box>
       <Text zIndex={1}>{article.tweet.substr(0, 30)}</Text>
-      <Text zIndex={1}>{article.ai_summary}</Text>
     </Box>
   )
 }
