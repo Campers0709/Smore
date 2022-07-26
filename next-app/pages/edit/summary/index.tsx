@@ -24,9 +24,12 @@ const SummaryCreate: React.FC<{}> = (): JSX.Element => {
     user_id: '0',
     category_id: null,
     url: '',
+    preview_image_url: '',
     tweet: '',
     user_text: '',
+    ai_summary: '',
     liked_at: '',
+    tweet_created_at: '',
   })
   useEffect(() => {
     const userNameStore = localStorage.getItem('name')
